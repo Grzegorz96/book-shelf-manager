@@ -1,0 +1,137 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header {
+  height: 100%;
+  width: 100%;
+  border-bottom: 1px solid color-mix(in oklch, color('border') 40%, transparent);
+  background-color: color-mix(in oklch, color('card') 95%, transparent);
+  backdrop-filter: blur(8px);
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background-color: color-mix(in oklch, color('card') 60%, transparent);
+  }
+
+  &__container-outer {
+    margin-inline: auto;
+    padding-inline: 1rem;
+
+    @media (width >= 640px) {
+      padding-inline: 1.5rem;
+    }
+
+    @media (width >= 1024px) {
+      padding-inline: 2rem;
+    }
+  }
+
+  &__container-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+    margin-inline: 1rem;
+  }
+
+  &__logo {
+    @include flex-layout($align: center);
+    gap: 0.5rem;
+    transition: opacity 0.2s ease-in-out;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+    border-radius: size('radius-lg');
+    background-color: color('primary');
+    color: color('primary-foreground');
+  }
+
+  &__logo-icon {
+    fill: color('primary-foreground');
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &__logo-text {
+    font-size: size('font-base');
+    font-weight: bold;
+    color: color('foreground');
+  }
+
+  &__nav {
+    @include flex-layout($align: center);
+  }
+
+  &__nav-list {
+    @include flex-layout($align: center);
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__nav-item {
+    list-style: none;
+  }
+
+  &__nav-link {
+    @include flex-layout($justify: center, $align: center);
+    gap: 0.5rem;
+    height: 2rem;
+    min-width: 7rem;
+    padding: 0 0.75rem;
+    font-size: size('font-sm');
+    font-weight: 500;
+    color: color('foreground');
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    border-radius: size('radius-lg');
+    border: 1px solid transparent;
+    background-color: color-mix(in oklch, color('card') 50%, transparent);
+    backdrop-filter: blur(4px);
+    text-decoration: none;
+
+    &:hover {
+      background-color: color-mix(in oklch, color('primary') 80%, transparent);
+      color: color('primary-foreground');
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border-color: color-mix(in oklch, color('primary') 30%, transparent);
+    }
+
+    &--active {
+      background-color: color('primary');
+      color: color('primary-foreground');
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &__nav-icon {
+    height: 1rem;
+    width: 1rem;
+    flex-shrink: 0;
+
+    ::ng-deep svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__nav-text {
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+}
