@@ -1,15 +1,12 @@
 @use 'abstracts' as *;
-@use 'sass:map';
 
 .container {
   width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
 
-  @each $name, $value in $breakpoints {
-    @media (min-width: $value) {
+  @each $size, $value in $breakpoints {
+    @include mq($size) {
       max-width: $value;
     }
   }

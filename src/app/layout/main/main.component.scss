@@ -1,0 +1,16 @@
+@use 'abstracts' as *;
+
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.main {
+  @include mq(sm) {
+    padding-inline: 1.5rem;
+  }
+
+  @include mq(lg) {
+    padding-inline: 2rem;
+  }
+}

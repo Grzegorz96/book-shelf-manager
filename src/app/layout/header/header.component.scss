@@ -9,7 +9,6 @@
 }
 
 .header {
-  height: 100%;
   width: 100%;
   border-bottom: 1px solid color-mix(in oklch, color('border') 40%, transparent);
   background-color: color-mix(in oklch, color('card') 95%, transparent);
@@ -20,22 +19,17 @@
   }
 
   &__container-outer {
-    margin-inline: auto;
-    padding-inline: 1rem;
-
-    @media (width >= 640px) {
+    @include mq('sm') {
       padding-inline: 1.5rem;
     }
 
-    @media (width >= 1024px) {
+    @include mq('lg') {
       padding-inline: 2rem;
     }
   }
 
   &__container-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include flex-layout($justify: space-between, $align: center);
     height: 3rem;
     margin-inline: 1rem;
   }
@@ -49,21 +43,17 @@
     }
   }
 
-  &__logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &__logo-icon-container {
+    @include flex-layout($justify: center, $align: center);
     height: 2rem;
     width: 2rem;
     border-radius: size('radius-lg');
     background-color: color('primary');
-    color: color('primary-foreground');
   }
 
-  &__logo-icon {
-    fill: color('primary-foreground');
-    height: 1.5rem;
-    width: 1.5rem;
+  app-logo {
+    height: 1.6rem;
+    width: 1.6rem;
   }
 
   &__logo-text {

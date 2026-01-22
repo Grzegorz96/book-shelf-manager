@@ -4,7 +4,7 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { LucideAngularModule, LibraryBig, LogIn, LogOut } from 'lucide-angular';
+import { LucideAngularModule, LibraryBig, LogIn, LogOut, Mail, Phone } from 'lucide-angular';
 
 import { routes } from './app.routes';
 
@@ -17,6 +17,8 @@ export const appConfig: ApplicationConfig = {
         LibraryBig,
         LogIn,
         LogOut,
+        Mail,
+        Phone,
       })
     ),
   ],
