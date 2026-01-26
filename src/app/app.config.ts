@@ -22,6 +22,7 @@ import {
   SquarePen,
   CalendarDays,
   NotebookPen,
+  Clock,
 } from 'lucide-angular';
 import { TemplatePageTitleStrategy } from '@core/services';
 
@@ -49,7 +50,8 @@ export const appConfig: ApplicationConfig = {
         SquarePen,
         CalendarDays,
         NotebookPen,
-      })
+        Clock,
+      }),
     ),
   ],
 };

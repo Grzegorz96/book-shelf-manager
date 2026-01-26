@@ -20,16 +20,25 @@
     <div class="book-details__field">
       <span class="book-details__label">Favorite:</span>
       @if (book().isFavorite) {
-      <div class="book-details__value-container">
-        <lucide-angular name="Star" class="book-details__value-icon" />
-        <span class="book-details__value">Yes</span>
-      </div>
+        <div class="book-details__value-container">
+          <lucide-angular name="Star" class="book-details__value-icon" />
+          <span class="book-details__value">Yes</span>
+        </div>
       } @else {
-      <span class="book-details__value">No</span>
+        <span class="book-details__value">No</span>
       }
     </div>
     <div class="book-details__field book-details__field--full">
-      <span class="book-details__label">Description:</span>
+      <div class="book-details__description-container">
+        <span class="book-details__label">Description:</span>
+        <div class="book-details__reading-time">
+          <lucide-angular name="Clock" class="book-details__reading-time-icon" />
+          <span class="book-details__reading-time-value">{{
+            book().description | readingTime
+          }}</span>
+        </div>
+      </div>
+
       <p class="book-details__description">{{ book().description }}</p>
     </div>
   </div>
