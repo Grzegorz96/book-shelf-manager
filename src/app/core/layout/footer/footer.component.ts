@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { LogoComponent } from '../../shared/logo';
+import { LogoComponent } from '@shared/logo';
 
 @Component({
   selector: 'app-footer',
@@ -10,9 +10,8 @@ import { LogoComponent } from '../../shared/logo';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  protected readonly appName = signal('Shelfy');
   protected readonly description = signal(
-    'Organize your personal library. Track, manage, and discover your book collection with ease.'
+    'Organize your personal library. Track, manage, and discover your book collection with ease.',
   );
   protected readonly currentYear = new Date().getFullYear();
 }

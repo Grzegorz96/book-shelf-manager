@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { LogoComponent } from '../../shared/logo';
+import { LogoComponent } from '@shared/logo';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +10,6 @@ import { LogoComponent } from '../../shared/logo';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  protected readonly appName = signal('Shelfy');
-
   protected readonly routes = signal([
     {
       label: 'Books',

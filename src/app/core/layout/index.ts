@@ -1,0 +1,3 @@
+export { HeaderComponent } from './header';
+export { FooterComponent } from './footer';
+export { MainComponent } from './main';
