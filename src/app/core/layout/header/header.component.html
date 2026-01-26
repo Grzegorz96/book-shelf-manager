@@ -25,6 +25,24 @@
               </a>
             </li>
           }
+
+          <li class="header__nav-item">
+            @if (isAuthenticated()) {
+              <button (click)="handleLogout()" class="header__nav-link header__nav-link--logout">
+                <lucide-angular name="LogOut" class="header__nav-icon" />
+                <span class="header__nav-text">Logout</span>
+              </button>
+            } @else {
+              <a
+                routerLink="/auth"
+                routerLinkActive="header__nav-link--active"
+                class="header__nav-link"
+              >
+                <lucide-angular name="LogIn" class="header__nav-icon" />
+                <span class="header__nav-text">Login</span>
+              </a>
+            }
+          </li>
         </ul>
       </nav>
     </div>

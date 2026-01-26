@@ -1,0 +1,46 @@
+<form (submit)="handleSubmit($event)" class="auth-form">
+  <h3 class="auth-form__title">Login</h3>
+
+  <div class="auth-form__field">
+    <label for="email" class="auth-form__label">Email *</label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="email"
+      [formField]="authForm.email"
+      class="auth-form__input"
+      [class.auth-form__input--error]="authForm.email().invalid() && authForm.email().touched()"
+    />
+    @if (authForm.email().invalid() && authForm.email().touched()) {
+      @for (error of authForm.email().errors(); track error.kind) {
+        <span class="auth-form__error">
+          {{ error.message }}
+        </span>
+      }
+    }
+  </div>
+
+  <div class="auth-form__field">
+    <label for="password" class="auth-form__label">Password *</label>
+    <input
+      id="password"
+      type="password"
+      [formField]="authForm.password"
+      class="auth-form__input"
+      [class.auth-form__input--error]="
+        authForm.password().invalid() && authForm.password().touched()
+      "
+    />
+    @if (authForm.password().invalid() && authForm.password().touched()) {
+      @for (error of authForm.password().errors(); track error.kind) {
+        <span class="auth-form__error">
+          {{ error.message }}
+        </span>
+      }
+    }
+  </div>
+
+  <button type="submit" class="auth-form__button-submit" [disabled]="authForm().invalid()">
+    Login
+  </button>
+</form>
