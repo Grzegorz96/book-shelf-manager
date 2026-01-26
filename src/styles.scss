@@ -2,6 +2,7 @@
 @use 'base';
 
 :root {
+  --geist-font-sans: 'Geist', system-ui, sans-serif;
   --radius: 0.625rem;
   --background: oklch(24.747% 0.00616 179.401);
   --foreground: oklch(93.9% 0.00551 184.133);
@@ -15,7 +16,7 @@
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.95 0.01 180 / 0.12);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.769 0.188 70.08);
+  --accent: oklch(0.75 0.15 85);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);

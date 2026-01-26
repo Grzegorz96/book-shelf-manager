@@ -1,0 +1,65 @@
+<section class="books">
+  <div class="books__header">
+    <h2 class="books__title">My Books</h2>
+    <button class="books__add-button" (click)="handleAddBook()" aria-label="Add book">
+      <lucide-angular name="BookPlus" class="books__add-button-icon" />
+      <span>Add Book</span>
+    </button>
+  </div>
+
+  @if (booksState().showForm) {
+    <div class="books__overlay" appScrollLock (click)="handleCancelForm()">
+      <div class="books__overlay-content" (click)="$event.stopPropagation()">
+        <button class="books__close-button" (click)="handleCancelForm()" aria-label="Close">
+          <lucide-angular name="X" class="books__close-button-icon" />
+        </button>
+        <app-book-form
+          [book]="booksState().editingBook"
+          (onSave)="handleSaveBook($event)"
+          (onCancel)="handleCancelForm()"
+        />
+      </div>
+    </div>
+  } @else if (booksState().detailedBook) {
+    <div class="books__overlay" appScrollLock (click)="handleCloseDetails()">
+      <div class="books__overlay-content" (click)="$event.stopPropagation()">
+        <button class="books__close-button" (click)="handleCloseDetails()" aria-label="Close">
+          <lucide-angular name="X" class="books__close-button-icon" />
+        </button>
+        @defer (on immediate) {
+          <app-book-details [book]="booksState().detailedBook!" />
+        } @placeholder {
+          <div class="books__placeholder">Loading details...</div>
+        } @loading (minimum 500ms) {
+          <div class="books__loading">Loading book details...</div>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="books__grid-section">
+    @if (booksResource.isLoading()) {
+      <div class="books__grid">
+        @for (i of skeletons; track $index) {
+          <app-book-card-skeleton />
+        }
+      </div>
+    } @else if (booksResource.hasValue()) {
+      <div class="books__grid">
+        @for (book of booksResource.value(); track book.id) {
+          <app-book-card
+            [book]="book"
+            (onEdit)="handleEditBook($event)"
+            (onDelete)="handleDeleteBook($event)"
+            (onToggleFavorite)="handleToggleFavorite($event.id, $event.isFavorite)"
+            (onViewDetails)="handleViewDetails($event)"
+          />
+        } @empty {
+          <div class="books__empty">
+            <p class="books__empty-text">No books found. Add your first book!</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
