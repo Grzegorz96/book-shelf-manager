@@ -12,6 +12,16 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## JSON Server
+
+This project uses [json-server](https://github.com/typicode/json-server) to provide a mock REST API for development. To start the JSON server, run:
+
+```bash
+npm run json-server
+```
+
+The JSON server will start on `http://localhost:3001` and serve data from `db.json`. Make sure to run this in a separate terminal window while developing, as the Angular development server and JSON server need to run simultaneously.
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

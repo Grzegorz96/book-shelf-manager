@@ -1,0 +1,36 @@
+<div class="book-details">
+  <h3 class="book-details__title">Book Details</h3>
+  <div class="book-details__content">
+    <div class="book-details__field">
+      <span class="book-details__label">Title:</span>
+      <span class="book-details__value">{{ book().title }}</span>
+    </div>
+    <div class="book-details__field">
+      <span class="book-details__label">Author:</span>
+      <span class="book-details__value">{{ book().author }}</span>
+    </div>
+    <div class="book-details__field">
+      <span class="book-details__label">Year:</span>
+      <span class="book-details__value">{{ book().year }}</span>
+    </div>
+    <div class="book-details__field">
+      <span class="book-details__label">Genre:</span>
+      <span class="book-details__value">{{ book().genre }}</span>
+    </div>
+    <div class="book-details__field">
+      <span class="book-details__label">Favorite:</span>
+      @if (book().isFavorite) {
+      <div class="book-details__value-container">
+        <lucide-angular name="Star" class="book-details__value-icon" />
+        <span class="book-details__value">Yes</span>
+      </div>
+      } @else {
+      <span class="book-details__value">No</span>
+      }
+    </div>
+    <div class="book-details__field book-details__field--full">
+      <span class="book-details__label">Description:</span>
+      <p class="book-details__description">{{ book().description }}</p>
+    </div>
+  </div>
+</div>
