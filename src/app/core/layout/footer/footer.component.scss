@@ -64,6 +64,10 @@
     font-size: size('font-lg');
     font-weight: bold;
     color: color('foreground');
+
+    &--highlight {
+      color: color('primary');
+    }
   }
 
   &__description {
@@ -110,11 +114,6 @@
   &__contact-icon {
     height: 1rem;
     width: 1rem;
-    flex-shrink: 0;
-    ::ng-deep svg {
-      height: 100%;
-      width: 100%;
-    }
   }
 
   &__bottom-bar {

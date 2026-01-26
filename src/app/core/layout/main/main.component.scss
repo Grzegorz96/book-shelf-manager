@@ -2,10 +2,13 @@
 
 :host {
   display: flex;
+  justify-content: center;
   flex: 1;
 }
 
 .main {
+  margin: 1rem;
+
   @include mq(sm) {
     padding-inline: 1.5rem;
   }
