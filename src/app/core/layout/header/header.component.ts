@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
-import { RouterLinkActive, RouterLink } from '@angular/router';
+import { Component, signal, inject } from '@angular/core';
+import { RouterLinkActive, RouterLink, Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { LogoComponent } from '@shared/logo';
+import { AuthService } from '@core/services';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,9 @@ import { LogoComponent } from '@shared/logo';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  private readonly authService = inject(AuthService);
+  protected readonly isAuthenticated = this.authService.isAuthenticated;
+  private readonly router = inject(Router);
   protected readonly routes = signal([
     {
       label: 'Books',
@@ -17,14 +21,21 @@ export class HeaderComponent {
       path: '/books',
     },
     {
-      label: 'Login',
-      icon: 'LogIn',
-      path: '/login',
+      label: 'Mock 1',
+      icon: 'Square',
+      path: '/mock-1',
     },
     {
-      label: 'Logout',
-      icon: 'LogOut',
-      path: '/logout',
+      label: 'Mock 2',
+      icon: 'Square',
+      path: '/mock-2',
     },
   ]);
+
+  protected handleLogout(): void {
+    const response = this.authService.logout();
+    if (response.success) {
+      this.router.navigate(['/']);
+    }
+  }
 }

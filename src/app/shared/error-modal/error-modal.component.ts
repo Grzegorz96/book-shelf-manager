@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { ErrorModalState } from './error-modal.interface';
-import { ScrollLockDirective } from '@core/services/scroll';
+import { ScrollLockDirective } from '@core/services';
 import { ErrorModalService } from './error-modal.service';
 
 const DEFAULT_PRIMARY_ACTION_LABEL: string = 'OK';

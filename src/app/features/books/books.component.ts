@@ -7,7 +7,7 @@ import { BookFormComponent } from './book-form/book-form';
 import { BookDetailsComponent } from './book-details/book-details';
 import { LucideAngularModule } from 'lucide-angular';
 import { ErrorModalService } from '@shared/error-modal';
-import { ScrollLockDirective } from '@core/services/scroll';
+import { ScrollLockDirective } from '@core/services';
 
 @Component({
   selector: 'app-books',
