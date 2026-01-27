@@ -68,7 +68,7 @@
   }
 
   &__hero-description {
-    font-size: size('font-base');
+    font-size: size('font-md');
     color: color('muted-foreground');
     line-height: 1.6;
     margin: 0;
@@ -282,7 +282,7 @@
   }
 
   &__cta-description {
-    font-size: size('font-base');
+    font-size: size('font-md');
     color: color('muted-foreground');
     line-height: 1.6;
     margin: 0;
