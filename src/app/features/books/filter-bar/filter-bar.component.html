@@ -18,7 +18,12 @@
       </button>
     }
   </div>
-  <button type="submit" class="filter-bar__submit-btn" aria-label="Apply filter">
+  <button
+    type="submit"
+    class="filter-bar__submit-btn"
+    aria-label="Apply filter"
+    [disabled]="isDisabled()"
+  >
     <lucide-angular name="ListFilter" class="filter-bar__submit-icon" />
   </button>
 </form>

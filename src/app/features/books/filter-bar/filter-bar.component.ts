@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, output, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
@@ -14,6 +14,7 @@ export class FilterBarComponent {
   protected readonly filterForm = new FormGroup({
     bookByGenre: new FormControl(''),
   });
+  public readonly isDisabled = input.required<boolean>();
 
   protected applyFilter(): void {
     this.filterOutput.emit(this.filterForm.value.bookByGenre ?? '');

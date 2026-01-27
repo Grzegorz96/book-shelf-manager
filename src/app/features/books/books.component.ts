@@ -45,13 +45,10 @@ export class BooksComponent {
 
   constructor() {
     effect(() => {
-      const error = this.booksResource.error();
-
-      if (error) {
+      if (this.booksResource.error()) {
         this.errorModalService.openErrorModal({
           title: 'Error loading books',
-          message:
-            this.booksResource.error()?.message ?? 'An error occurred while loading the books.',
+          message: 'An error occurred while loading the books.',
           primaryActionLabel: 'Retry',
           onPrimaryAction: (): void => {
             this.booksResource.reload();

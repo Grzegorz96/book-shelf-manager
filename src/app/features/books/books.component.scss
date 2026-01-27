@@ -45,6 +45,11 @@
     background-color: color('primary');
     color: color('primary-foreground');
 
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     &:hover {
       background-color: color-mix(in oklch, color('primary') 90%, transparent);
       box-shadow:

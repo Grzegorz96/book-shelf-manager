@@ -1,8 +1,16 @@
 <section class="books">
   <div class="books__header">
     <h2 class="books__title">My Books</h2>
-    <app-filter-bar (filterOutput)="handleFilterOutput($event)" />
-    <button class="books__add-button" (click)="handleAddBook()" aria-label="Add book">
+    <app-filter-bar
+      (filterOutput)="handleFilterOutput($event)"
+      [isDisabled]="booksResource.isLoading() || !!booksResource.error()"
+    />
+    <button
+      [disabled]="booksResource.isLoading() || !!booksResource.error()"
+      class="books__add-button"
+      (click)="handleAddBook()"
+      aria-label="Add book"
+    >
       <lucide-angular name="BookPlus" class="books__add-button-icon" />
       <span>Add Book</span>
     </button>
