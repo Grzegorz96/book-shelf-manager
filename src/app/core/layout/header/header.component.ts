@@ -14,21 +14,21 @@ export class HeaderComponent {
   private readonly authService = inject(AuthService);
   protected readonly isAuthenticated = this.authService.isAuthenticated;
   private readonly router = inject(Router);
+  protected readonly isMenuOpen = signal(false);
+
+  protected toggleMenu(): void {
+    this.isMenuOpen.update((open) => !open);
+  }
+
+  protected closeMenu(): void {
+    this.isMenuOpen.set(false);
+  }
+
   protected readonly routes = signal([
     {
       label: 'Books',
       icon: 'LibraryBig',
       path: '/books',
-    },
-    {
-      label: 'Mock 1',
-      icon: 'Square',
-      path: '/mock-1',
-    },
-    {
-      label: 'Mock 2',
-      icon: 'Square',
-      path: '/mock-2',
     },
   ]);
 

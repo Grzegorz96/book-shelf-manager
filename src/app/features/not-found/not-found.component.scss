@@ -1,0 +1,113 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.not-found {
+  width: 100%;
+  min-height: 60vh;
+  @include flex-layout($justify: center, $align: center);
+  padding: 3rem 1rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, color('primary') 5%, transparent) 0%,
+    color-mix(in oklch, color('card') 95%, transparent) 100%
+  );
+  border-radius: size('radius-lg');
+
+  @include mq('sm') {
+    padding: 4rem 1.5rem;
+  }
+
+  @include mq('lg') {
+    padding: 6rem 2rem;
+    min-height: 70vh;
+  }
+}
+
+.not-found__content {
+  width: 100%;
+  max-width: 36rem;
+  @include flex-layout($direction: column, $align: center);
+  gap: 1rem;
+  text-align: center;
+
+  @include mq('sm') {
+    gap: 1.5rem;
+  }
+}
+
+.not-found__code {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: color('primary');
+  letter-spacing: -0.02em;
+
+  @include mq('sm') {
+    font-size: 7rem;
+  }
+
+  @include mq('lg') {
+    font-size: 9rem;
+  }
+}
+
+.not-found__title {
+  font-size: size('font-xl');
+  font-weight: 700;
+  color: color('foreground');
+  margin: 0;
+  line-height: 1.2;
+
+  @include mq('sm') {
+    font-size: size('font-xxl');
+  }
+
+  @include mq('lg') {
+    font-size: 2rem;
+  }
+}
+
+.not-found__description {
+  font-size: size('font-md');
+  color: color('muted-foreground');
+  line-height: 1.6;
+  margin: 0;
+
+  @include mq('sm') {
+    font-size: size('font-lg');
+  }
+}
+
+.not-found__cta {
+  @include flex-layout($align: center, $justify: center);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: size('radius-lg');
+  padding: 0.75rem 1.5rem;
+  font-size: size('font-sm');
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  background-color: color('primary');
+  color: color('primary-foreground');
+
+  &:hover {
+    background-color: color-mix(in oklch, color('primary') 90%, transparent);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: color-mix(in oklch, color('primary') 30%, transparent);
+  }
+}
+
+.not-found__cta-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

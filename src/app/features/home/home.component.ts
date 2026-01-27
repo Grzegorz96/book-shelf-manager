@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { AuthService } from '@core/services';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [RouterLink, LucideAngularModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  private readonly authService = inject(AuthService);
+  protected readonly isAuthenticated = this.authService.isAuthenticated;
+}

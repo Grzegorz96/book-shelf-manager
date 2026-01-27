@@ -7,6 +7,7 @@ import { provideRouter, TitleStrategy } from '@angular/router';
 import {
   LucideAngularModule,
   LibraryBig,
+  ListFilter,
   LogIn,
   LogOut,
   Mail,
@@ -16,12 +17,14 @@ import {
   X,
   Heart,
   Star,
-  Plus,
   BookPlus,
   Trash2,
   SquarePen,
   CalendarDays,
   NotebookPen,
+  Clock,
+  Menu,
+  House,
 } from 'lucide-angular';
 import { TemplatePageTitleStrategy } from '@core/services';
 
@@ -35,6 +38,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       LucideAngularModule.pick({
         LibraryBig,
+        ListFilter,
         LogIn,
         LogOut,
         Mail,
@@ -49,7 +53,10 @@ export const appConfig: ApplicationConfig = {
         SquarePen,
         CalendarDays,
         NotebookPen,
-      })
+        Clock,
+        Menu,
+        House,
+      }),
     ),
   ],
 };

@@ -1,13 +1,14 @@
-import { Component, inject, signal, resource, effect } from '@angular/core';
+import { Component, inject, signal, resource, effect, computed } from '@angular/core';
 import { BooksService } from './books.service';
 import { Book } from './book.interface';
-import { BookCardComponent } from './book-card/book-card';
-import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton';
-import { BookFormComponent } from './book-form/book-form';
-import { BookDetailsComponent } from './book-details/book-details';
+import { BookCardComponent } from './book-card/book-card.component';
+import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton.component';
+import { BookFormComponent } from './book-form/book-form.component';
+import { BookDetailsComponent } from './book-details/book-details.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { ErrorModalService } from '@shared/error-modal';
 import { ScrollLockDirective } from '@core/services';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-books',
@@ -18,6 +19,7 @@ import { ScrollLockDirective } from '@core/services';
     BookDetailsComponent,
     LucideAngularModule,
     ScrollLockDirective,
+    FilterBarComponent,
   ],
   templateUrl: './books.component.html',
   styleUrl: './books.component.scss',
@@ -29,6 +31,7 @@ export class BooksComponent {
     loader: () => this.booksService.getBooks(),
   });
   protected readonly skeletons = Array(9).fill(0);
+  protected readonly filterGenre = signal<string>('');
 
   protected readonly booksState = signal<{
     showForm: boolean;
@@ -42,13 +45,10 @@ export class BooksComponent {
 
   constructor() {
     effect(() => {
-      const error = this.booksResource.error();
-
-      if (error) {
+      if (this.booksResource.error()) {
         this.errorModalService.openErrorModal({
           title: 'Error loading books',
-          message:
-            this.booksResource.error()?.message ?? 'An error occurred while loading the books.',
+          message: 'An error occurred while loading the books.',
           primaryActionLabel: 'Retry',
           onPrimaryAction: (): void => {
             this.booksResource.reload();
@@ -57,6 +57,17 @@ export class BooksComponent {
       }
     });
   }
+
+  protected readonly filteredBooks = computed(() => {
+    if (!this.booksResource.hasValue()) return [];
+
+    const allBooks = this.booksResource.value();
+    const filter = this.filterGenre().toLowerCase().trim();
+
+    if (!filter) return allBooks;
+
+    return allBooks.filter((book) => book.genre.toLowerCase().includes(filter));
+  });
 
   handleAddBook() {
     this.booksState.set({
@@ -159,5 +170,9 @@ export class BooksComponent {
       ...state,
       detailedBook: null,
     }));
+  }
+
+  handleFilterOutput(category: string) {
+    this.filterGenre.set(category);
   }
 }

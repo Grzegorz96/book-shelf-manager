@@ -5,8 +5,8 @@ import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'app-book-card',
   imports: [LucideAngularModule],
-  templateUrl: './book-card.html',
-  styleUrl: './book-card.scss',
+  templateUrl: './book-card.component.html',
+  styleUrl: './book-card.component.scss',
 })
 export class BookCardComponent {
   readonly book = input.required<Book>();

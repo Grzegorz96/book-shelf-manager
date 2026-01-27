@@ -7,13 +7,5 @@
 }
 
 .main {
-  margin: 1rem;
-
-  @include mq(sm) {
-    padding-inline: 1.5rem;
-  }
-
-  @include mq(lg) {
-    padding-inline: 2rem;
-  }
+  margin-block: 2rem;
 }

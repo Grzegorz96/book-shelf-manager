@@ -1,0 +1,101 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  width: 100%;
+
+  @include mq('sm') {
+    width: 50%;
+  }
+
+  @include mq('md') {
+    width: auto;
+  }
+}
+
+.filter-bar {
+  @include flex-layout($align: center);
+  height: 2rem;
+
+  &__input-wrapper {
+    flex: 1;
+    position: relative;
+    @include flex-layout($align: center);
+  }
+
+  &__input {
+    height: 2rem;
+    width: 100%;
+    border-radius: size('radius-lg') 0 0 size('radius-lg');
+    border: 1px solid color('border');
+    padding: 0 2rem 0 0.75rem;
+    font-size: size('font-sm');
+    color: color('foreground');
+    background-color: color-mix(in oklch, color('card') 50%, transparent);
+    backdrop-filter: blur(4px);
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+
+    &::placeholder {
+      color: color('muted-foreground');
+    }
+
+    &:focus {
+      outline: none;
+      border-color: color('primary');
+    }
+  }
+
+  &__clear-btn {
+    position: absolute;
+    right: 0.5rem;
+
+    width: 1.25rem;
+    height: 1.25rem;
+    border: none;
+    background: none;
+    border-radius: size('radius-sm');
+    color: color('muted-foreground');
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      color: color('foreground');
+      background-color: color('muted');
+    }
+  }
+
+  &__clear-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  &__submit-btn {
+    @include flex-layout($justify: center, $align: center);
+    height: 2rem;
+    width: 2rem;
+    border-radius: 0 size('radius-lg') size('radius-lg') 0;
+    border: 1px solid transparent;
+    background-color: color('primary');
+    color: color('primary-foreground');
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: color-mix(in oklch, color('primary') 90%, transparent);
+    }
+  }
+
+  &__submit-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}

@@ -8,8 +8,8 @@ type BookFormModel = Omit<Book, 'id'>;
 @Component({
   selector: 'app-book-form',
   imports: [LucideAngularModule, FormField],
-  templateUrl: './book-form.html',
-  styleUrl: './book-form.scss',
+  templateUrl: './book-form.component.html',
+  styleUrl: './book-form.component.scss',
 })
 export class BookFormComponent {
   private readonly _bookFormSignal = signal<BookFormModel>({

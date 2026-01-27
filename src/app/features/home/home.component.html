@@ -1,1 +1,102 @@
-<p>home works!</p>
+<section class="home">
+  <!-- Hero Section -->
+  <div class="home__hero">
+    <div class="home__hero-content">
+      <h1 class="home__hero-title">
+        Organize Your
+        <span class="home__hero-title--highlight">Book Collection</span>
+        with Ease
+      </h1>
+      <p class="home__hero-description">
+        Shelfy helps you manage your personal library, track your reading progress, and discover
+        new favorites. Keep all your books organized in one beautiful place.
+      </p>
+      <div class="home__hero-actions">
+        @if (isAuthenticated()) {
+          <a routerLink="/books" class="home__cta-button home__cta-button--primary">
+            <lucide-angular name="LibraryBig" class="home__cta-icon" />
+            <span>View My Books</span>
+          </a>
+        } @else {
+          <a routerLink="/auth" class="home__cta-button home__cta-button--primary">
+            <lucide-angular name="LogIn" class="home__cta-icon" />
+            <span>Get Started</span>
+          </a>
+          <a routerLink="/books" class="home__cta-button home__cta-button--secondary">
+            <lucide-angular name="LibraryBig" class="home__cta-icon" />
+            <span>Browse Books</span>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="home__features">
+    <div class="home__features-container">
+      <h2 class="home__features-title">Everything you need to manage your library</h2>
+      <div class="home__features-grid">
+        <div class="home__feature-card">
+          <div class="home__feature-icon-container">
+            <lucide-angular name="BookPlus" class="home__feature-icon" />
+          </div>
+          <h3 class="home__feature-title">Add & Organize</h3>
+          <p class="home__feature-description">
+            Easily add new books to your collection with detailed information including title,
+            author, genre, and more.
+          </p>
+        </div>
+
+        <div class="home__feature-card">
+          <div class="home__feature-icon-container">
+            <lucide-angular name="Star" class="home__feature-icon" />
+          </div>
+          <h3 class="home__feature-title">Favorites</h3>
+          <p class="home__feature-description">
+            Mark your favorite books and quickly access them whenever you need inspiration for your
+            next read.
+          </p>
+        </div>
+
+        <div class="home__feature-card">
+          <div class="home__feature-icon-container">
+            <lucide-angular name="SquarePen" class="home__feature-icon" />
+          </div>
+          <h3 class="home__feature-title">Edit & Update</h3>
+          <p class="home__feature-description">
+            Keep your book information up to date. Edit details, update descriptions, and maintain
+            an accurate library.
+          </p>
+        </div>
+
+        <div class="home__feature-card">
+          <div class="home__feature-icon-container">
+            <lucide-angular name="LibraryBig" class="home__feature-icon" />
+          </div>
+          <h3 class="home__feature-title">Browse & Search</h3>
+          <p class="home__feature-description">
+            View your entire collection in a beautiful grid layout. Find any book quickly with
+            organized browsing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  @if (!isAuthenticated()) {
+    <div class="home__cta-section">
+      <div class="home__cta-content">
+        <h2 class="home__cta-title">Ready to start organizing your books?</h2>
+        <p class="home__cta-description">
+          Join Shelfy today and take control of your personal library. It's free and takes just a
+          moment to get started.
+        </p>
+        <a routerLink="/auth" class="home__cta-button home__cta-button--primary">
+          <lucide-angular name="LogIn" class="home__cta-icon" />
+          <span>Sign In Now</span>
+        </a>
+      </div>
+    </div>
+  }
+</section>

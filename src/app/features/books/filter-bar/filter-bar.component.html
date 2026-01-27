@@ -1,0 +1,29 @@
+<form [formGroup]="filterForm" (submit)="applyFilter()" class="filter-bar">
+  <div class="filter-bar__input-wrapper">
+    <input
+      id="filter-book-by-genre"
+      type="text"
+      placeholder="Filter by genre..."
+      class="filter-bar__input"
+      formControlName="bookByGenre"
+    />
+    @if (filterForm.controls.bookByGenre.value) {
+      <button
+        type="button"
+        class="filter-bar__clear-btn"
+        (click)="clearFilter()"
+        aria-label="Clear filter"
+      >
+        <lucide-angular name="X" class="filter-bar__clear-icon" />
+      </button>
+    }
+  </div>
+  <button
+    type="submit"
+    class="filter-bar__submit-btn"
+    aria-label="Apply filter"
+    [disabled]="isDisabled()"
+  >
+    <lucide-angular name="ListFilter" class="filter-bar__submit-icon" />
+  </button>
+</form>
