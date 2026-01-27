@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { Book } from '../book.interface';
 import { LucideAngularModule } from 'lucide-angular';
-import { ReadingTimePipe } from './reading-time.pipe';
+import { ReadingTimePipe } from '@core/pipes';
 
 @Component({
   selector: 'app-book-details',

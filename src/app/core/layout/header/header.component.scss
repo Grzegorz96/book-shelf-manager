@@ -18,20 +18,9 @@
     background-color: color-mix(in oklch, color('card') 60%, transparent);
   }
 
-  &__container-outer {
-    @include mq('sm') {
-      padding-inline: 1.5rem;
-    }
-
-    @include mq('lg') {
-      padding-inline: 2rem;
-    }
-  }
-
-  &__container-inner {
+  &__container {
     @include flex-layout($justify: space-between, $align: center);
     height: 3rem;
-    margin-inline: 1rem;
   }
 
   &__logo {
@@ -66,16 +55,80 @@
     }
   }
 
+  &__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: none;
+    border-radius: size('radius-lg');
+    background-color: color-mix(in oklch, color('card') 80%, transparent);
+    color: color('foreground');
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    @include mq('md') {
+      display: none;
+    }
+
+    &:hover {
+      background-color: color-mix(in oklch, color('primary') 80%, transparent);
+      color: color('primary-foreground');
+    }
+  }
+
+  &__hamburger-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
   &__nav {
-    @include flex-layout($align: center);
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+    background-color: color('background');
+
+    &.header__nav--open {
+      max-height: 80vh;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @include mq('md') {
+      position: static;
+      max-height: none;
+      opacity: 1;
+      visibility: visible;
+      overflow: visible;
+      background-color: transparent;
+      transition: none;
+    }
   }
 
   &__nav-list {
     @include flex-layout($align: center);
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
     list-style: none;
-    margin: 0;
-    padding: 0;
+
+    @include mq('md') {
+      flex-direction: row;
+      gap: 0.5rem;
+      padding: 0;
+    }
   }
 
   &__nav-item {

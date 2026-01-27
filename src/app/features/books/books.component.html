@@ -1,6 +1,7 @@
 <section class="books">
   <div class="books__header">
     <h2 class="books__title">My Books</h2>
+    <app-filter-bar (filterOutput)="handleFilterOutput($event)" />
     <button class="books__add-button" (click)="handleAddBook()" aria-label="Add book">
       <lucide-angular name="BookPlus" class="books__add-button-icon" />
       <span>Add Book</span>
@@ -46,7 +47,7 @@
       </div>
     } @else if (booksResource.hasValue()) {
       <div class="books__grid">
-        @for (book of booksResource.value(); track book.id) {
+        @for (book of filteredBooks(); track book.id) {
           <app-book-card
             [book]="book"
             (onEdit)="handleEditBook($event)"
@@ -56,7 +57,13 @@
           />
         } @empty {
           <div class="books__empty">
-            <p class="books__empty-text">No books found. Add your first book!</p>
+            @if (filterGenre()) {
+              <p class="books__empty-text">
+                No books found matching the genre "{{ filterGenre() }}".
+              </p>
+            } @else {
+              <p class="books__empty-text">Your library is empty. Add your first book!</p>
+            }
           </div>
         }
       </div>

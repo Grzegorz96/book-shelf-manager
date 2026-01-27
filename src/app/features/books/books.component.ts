@@ -1,4 +1,4 @@
-import { Component, inject, signal, resource, effect } from '@angular/core';
+import { Component, inject, signal, resource, effect, computed } from '@angular/core';
 import { BooksService } from './books.service';
 import { Book } from './book.interface';
 import { BookCardComponent } from './book-card/book-card';
@@ -8,6 +8,7 @@ import { BookDetailsComponent } from './book-details/book-details';
 import { LucideAngularModule } from 'lucide-angular';
 import { ErrorModalService } from '@shared/error-modal';
 import { ScrollLockDirective } from '@core/services';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-books',
@@ -18,6 +19,7 @@ import { ScrollLockDirective } from '@core/services';
     BookDetailsComponent,
     LucideAngularModule,
     ScrollLockDirective,
+    FilterBarComponent,
   ],
   templateUrl: './books.component.html',
   styleUrl: './books.component.scss',
@@ -29,6 +31,7 @@ export class BooksComponent {
     loader: () => this.booksService.getBooks(),
   });
   protected readonly skeletons = Array(9).fill(0);
+  protected readonly filterGenre = signal<string>('');
 
   protected readonly booksState = signal<{
     showForm: boolean;
@@ -57,6 +60,17 @@ export class BooksComponent {
       }
     });
   }
+
+  protected readonly filteredBooks = computed(() => {
+    if (!this.booksResource.hasValue()) return [];
+
+    const allBooks = this.booksResource.value();
+    const filter = this.filterGenre().toLowerCase().trim();
+
+    if (!filter) return allBooks;
+
+    return allBooks.filter((book) => book.genre.toLowerCase().includes(filter));
+  });
 
   handleAddBook() {
     this.booksState.set({
@@ -159,5 +173,9 @@ export class BooksComponent {
       ...state,
       detailedBook: null,
     }));
+  }
+
+  handleFilterOutput(category: string) {
+    this.filterGenre.set(category);
   }
 }
