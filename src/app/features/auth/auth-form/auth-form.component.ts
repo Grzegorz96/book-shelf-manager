@@ -6,8 +6,8 @@ import type { AuthCredentials } from '@core/services';
 @Component({
   selector: 'app-auth-form',
   imports: [LucideAngularModule, FormField],
-  templateUrl: './auth-form.html',
-  styleUrl: './auth-form.scss',
+  templateUrl: './auth-form.component.html',
+  styleUrl: './auth-form.component.scss',
 })
 export class AuthFormComponent {
   readonly onSubmit = output<AuthCredentials>();

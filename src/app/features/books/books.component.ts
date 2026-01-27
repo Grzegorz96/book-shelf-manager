@@ -1,10 +1,10 @@
 import { Component, inject, signal, resource, effect, computed } from '@angular/core';
 import { BooksService } from './books.service';
 import { Book } from './book.interface';
-import { BookCardComponent } from './book-card/book-card';
-import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton';
-import { BookFormComponent } from './book-form/book-form';
-import { BookDetailsComponent } from './book-details/book-details';
+import { BookCardComponent } from './book-card/book-card.component';
+import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton.component';
+import { BookFormComponent } from './book-form/book-form.component';
+import { BookDetailsComponent } from './book-details/book-details.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { ErrorModalService } from '@shared/error-modal';
 import { ScrollLockDirective } from '@core/services';
