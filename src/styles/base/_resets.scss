@@ -1,0 +1,82 @@
+@use 'abstracts' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: color('background');
+  color: color('foreground');
+  font-family: var(--geist-font-sans);
+  font-size: size('font-md');
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+lucide-angular svg {
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  scrollbar-color: color('muted-foreground') color('muted');
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: color('muted');
+  border-radius: size('radius-sm');
+}
+
+::-webkit-scrollbar-thumb {
+  background: color('muted-foreground');
+  border-radius: size('radius-sm');
+
+  &:hover {
+    background: color-mix(in oklch, color('muted-foreground') 80%, transparent);
+  }
+}

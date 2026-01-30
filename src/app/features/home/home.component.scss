@@ -1,0 +1,281 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.home {
+  width: 100%;
+  @include flex-layout($direction: column);
+
+  // Hero Section
+  &__hero {
+    width: 100%;
+    padding: 3rem 1rem;
+    @include flex-layout($justify: center, $align: center);
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, color('primary') 22%, color('background')) 0%,
+      color-mix(in oklch, color('primary') 10%, color('background')) 50%,
+      color-mix(in oklch, color('muted') 50%, color('background')) 100%
+    );
+    border-radius: size('radius-lg');
+
+    @include mq('sm') {
+      padding: 4rem 1.5rem;
+    }
+
+    @include mq('lg') {
+      padding: 6rem 2rem;
+    }
+  }
+
+  :host-context(.dark) &__hero {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, color('primary') 5%, transparent) 0%,
+      color-mix(in oklch, color('card') 95%, transparent) 100%
+    );
+  }
+
+  &__hero-content {
+    width: 100%;
+    max-width: 48rem;
+    @include flex-layout($direction: column, $align: center);
+    gap: 1.5rem;
+    text-align: center;
+
+    @include mq('sm') {
+      gap: 2rem;
+    }
+  }
+
+  &__hero-title {
+    font-size: size('font-xl');
+    font-weight: 700;
+    color: color('foreground');
+    line-height: 1.2;
+    margin: 0;
+
+    @include mq('sm') {
+      font-size: size('font-xxl');
+    }
+
+    @include mq('lg') {
+      font-size: 3rem;
+    }
+
+    &--highlight {
+      color: color('primary');
+      display: block;
+
+      @include mq('sm') {
+        display: inline;
+      }
+    }
+  }
+
+  &__hero-description {
+    font-size: size('font-md');
+    color: color('muted-foreground');
+    line-height: 1.6;
+    margin: 0;
+    max-width: 42rem;
+
+    @include mq('sm') {
+      font-size: size('font-lg');
+    }
+  }
+
+  &__hero-actions {
+    @include flex-layout($justify: center, $align: center);
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  // CTA Buttons
+  &__cta-button {
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  &__cta-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  // Features Section
+  &__features {
+    width: 100%;
+    padding: 4rem 1rem;
+    background-color: color('background');
+
+    @include mq('sm') {
+      padding: 5rem 1.5rem;
+    }
+
+    @include mq('lg') {
+      padding: 6rem 2rem;
+    }
+  }
+
+  &__features-container {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    @include flex-layout($direction: column);
+    gap: 3rem;
+
+    @include mq('lg') {
+      gap: 4rem;
+    }
+  }
+
+  &__features-title {
+    font-size: size('font-xl');
+    font-weight: 700;
+    color: color('foreground');
+    text-align: center;
+    margin: 0;
+
+    @include mq('sm') {
+      font-size: size('font-xxl');
+    }
+
+    @include mq('lg') {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @include mq('sm') {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    @include mq('lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__feature-card {
+    @include flex-layout($direction: column);
+    gap: 1rem;
+    padding: 2rem;
+    border-radius: size('radius-lg');
+    border: 1px solid color('border');
+    background-color: color('card');
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border-color: color-mix(in oklch, color('primary') 30%, transparent);
+    }
+  }
+
+  &__feature-icon-container {
+    @include flex-layout($justify: center, $align: center);
+    width: 3rem;
+    height: 3rem;
+    border-radius: size('radius-lg');
+    background-color: color-mix(in oklch, color('primary') 10%, transparent);
+    margin-bottom: 0.5rem;
+  }
+
+  &__feature-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: color('primary');
+  }
+
+  &__feature-title {
+    font-size: size('font-lg');
+    font-weight: 600;
+    color: color('foreground');
+    margin: 0;
+  }
+
+  &__feature-description {
+    font-size: size('font-sm');
+    color: color('muted-foreground');
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  // CTA Section
+  &__cta-section {
+    width: 100%;
+    padding: 4rem 1rem;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, color('primary') 22%, color('background')) 0%,
+      color-mix(in oklch, color('primary') 10%, color('background')) 50%,
+      color-mix(in oklch, color('muted') 50%, color('background')) 100%
+    );
+    border-radius: size('radius-lg');
+
+    @include mq('sm') {
+      padding: 5rem 1.5rem;
+    }
+
+    @include mq('lg') {
+      padding: 6rem 2rem;
+    }
+  }
+
+  :host-context(.dark) &__cta-section {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, color('primary') 5%, transparent) 0%,
+      color-mix(in oklch, color('card') 95%, transparent) 100%
+    );
+  }
+
+  &__cta-content {
+    width: 100%;
+    max-width: 48rem;
+    margin-inline: auto;
+    @include flex-layout($direction: column, $align: center);
+    gap: 1.5rem;
+    text-align: center;
+
+    @include mq('sm') {
+      gap: 2rem;
+    }
+  }
+
+  &__cta-title {
+    font-size: size('font-xl');
+    font-weight: 700;
+    color: color('foreground');
+    margin: 0;
+
+    @include mq('sm') {
+      font-size: size('font-xxl');
+    }
+
+    @include mq('lg') {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__cta-description {
+    font-size: size('font-md');
+    color: color('muted-foreground');
+    line-height: 1.6;
+    margin: 0;
+    max-width: 42rem;
+
+    @include mq('sm') {
+      font-size: size('font-lg');
+    }
+  }
+}

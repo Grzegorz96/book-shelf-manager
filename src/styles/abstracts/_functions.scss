@@ -1,0 +1,16 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+@function color($name) {
+  @if not map.has-key($colors, $name) {
+    @error 'There is no such color: #{$name}. Available: #{map.keys($colors)}';
+  }
+  @return map.get($colors, $name);
+}
+
+@function size($name) {
+  @if not map.has-key($sizes, $name) {
+    @error 'There is no such size: #{$name}. Available: #{map.keys($sizes)}';
+  }
+  @return map.get($sizes, $name);
+}

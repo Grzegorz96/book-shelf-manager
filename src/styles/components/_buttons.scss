@@ -1,0 +1,71 @@
+@use 'abstracts' as *;
+
+.app-button {
+  @include flex-layout($align: center, $justify: center);
+  gap: 0.3rem;
+  border-radius: size('radius-lg');
+  padding: 0.5rem 0.9rem;
+  font-size: size('font-sm');
+  font-weight: 500;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:focus-visible {
+    outline: 2px solid color('primary');
+    outline-offset: 2px;
+  }
+
+  &--primary {
+    background-color: color('primary');
+    color: color('primary-foreground');
+    &:hover:not(:disabled) {
+      background-color: color-mix(in oklch, color('primary') 90%, transparent);
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      border-color: color-mix(in oklch, color('primary') 30%, transparent);
+    }
+  }
+
+  &--secondary {
+    border: 1px solid color('border');
+    background-color: color('background');
+    color: color('foreground');
+    &:hover:not(:disabled) {
+      background-color: color('muted');
+    }
+  }
+
+  &--header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid color('border');
+    background-color: color-mix(in oklch, color('muted') 80%, transparent);
+    backdrop-filter: blur(4px);
+    color: color('foreground');
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in oklch, color('primary') 80%, transparent);
+      color: color('primary-foreground');
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border-color: color-mix(in oklch, color('primary') 30%, transparent);
+    }
+  }
+}

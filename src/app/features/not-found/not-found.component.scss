@@ -1,0 +1,103 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.not-found {
+  width: 100%;
+  min-height: 60vh;
+  @include flex-layout($justify: center, $align: center);
+  padding: 3rem 1rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, color('primary') 22%, color('background')) 0%,
+    color-mix(in oklch, color('primary') 10%, color('background')) 50%,
+    color-mix(in oklch, color('muted') 50%, color('background')) 100%
+  );
+  border-radius: size('radius-lg');
+
+  @include mq('sm') {
+    padding: 4rem 1.5rem;
+  }
+
+  @include mq('lg') {
+    padding: 6rem 2rem;
+    min-height: 70vh;
+  }
+}
+
+:host-context(.dark) .not-found {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, color('primary') 5%, transparent) 0%,
+    color-mix(in oklch, color('card') 95%, transparent) 100%
+  );
+}
+
+.not-found__content {
+  width: 100%;
+  max-width: 36rem;
+  @include flex-layout($direction: column, $align: center);
+  gap: 1rem;
+  text-align: center;
+
+  @include mq('sm') {
+    gap: 1.5rem;
+  }
+}
+
+.not-found__code {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: color('primary');
+  letter-spacing: -0.02em;
+
+  @include mq('sm') {
+    font-size: 7rem;
+  }
+
+  @include mq('lg') {
+    font-size: 9rem;
+  }
+}
+
+.not-found__title {
+  font-size: size('font-xl');
+  font-weight: 700;
+  color: color('foreground');
+  margin: 0;
+  line-height: 1.2;
+
+  @include mq('sm') {
+    font-size: size('font-xxl');
+  }
+
+  @include mq('lg') {
+    font-size: 2rem;
+  }
+}
+
+.not-found__description {
+  font-size: size('font-md');
+  color: color('muted-foreground');
+  line-height: 1.6;
+  margin: 0;
+
+  @include mq('sm') {
+    font-size: size('font-lg');
+  }
+}
+
+.not-found__cta {
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.not-found__cta-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

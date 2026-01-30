@@ -1,0 +1,229 @@
+@use 'abstracts' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header {
+  width: 100%;
+  border-bottom: 1px solid color-mix(in oklch, color('border') 40%, transparent);
+  background-color: color-mix(in oklch, color('card') 95%, transparent);
+  backdrop-filter: blur(8px);
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background-color: color-mix(in oklch, color('card') 60%, transparent);
+  }
+
+  &__container {
+    @include flex-layout($justify: space-between, $align: center);
+    height: 3rem;
+  }
+
+  &__right {
+    @include flex-layout($align: center);
+    gap: 0.5rem;
+
+    @include mq('md') {
+      gap: 0.75rem;
+    }
+  }
+
+  &__logo {
+    @include flex-layout($align: center);
+    gap: 0.5rem;
+    transition: opacity 0.2s ease-in-out;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__logo-icon-container {
+    @include flex-layout($justify: center, $align: center);
+    height: 2rem;
+    width: 2rem;
+    border-radius: size('radius-lg');
+    background-color: color('primary');
+  }
+
+  app-logo {
+    height: 1.6rem;
+    width: 1.6rem;
+  }
+
+  &__logo-text {
+    font-size: size('font-lg');
+    font-weight: bold;
+    color: color('foreground');
+
+    &--highlight {
+      color: color('primary');
+    }
+  }
+
+  &__actions {
+    @include flex-layout($align: center);
+    gap: 0.5rem;
+  }
+
+  &__theme-toggle {
+    width: 2.25rem;
+    height: 2.25rem;
+    position: relative;
+    overflow: hidden;
+
+    @include mq('md') {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &__theme-icon-wrapper {
+    position: relative;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mq('md') {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  &__theme-icon {
+    position: absolute;
+    width: 1.375rem;
+    height: 1.375rem;
+    animation: themeIconTransition 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    @include mq('md') {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  &__hamburger {
+    width: 2.25rem;
+    height: 2.25rem;
+
+    @include mq('md') {
+      display: none;
+    }
+  }
+
+  &__hamburger-icon {
+    height: 1.375rem;
+    width: 1.375rem;
+
+    @include mq('md') {
+      height: 1.25rem;
+      width: 1.25rem;
+    }
+  }
+
+  &__nav {
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+    background-color: color('background');
+
+    &.header__nav--open {
+      max-height: 80vh;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @include mq('md') {
+      position: static;
+      max-height: none;
+      opacity: 1;
+      visibility: visible;
+      overflow: visible;
+      background-color: transparent;
+      transition: none;
+    }
+  }
+
+  &__nav-list {
+    @include flex-layout($align: center);
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+
+    @include mq('md') {
+      flex-direction: row;
+      padding: 0;
+    }
+  }
+
+  &__nav-link {
+    gap: 0.5rem;
+    height: 2rem;
+    padding: 0 0.75rem;
+    min-width: 7rem;
+    color: color('foreground');
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    border: 1px solid color('border');
+    background-color: color-mix(in oklch, color('muted') 80%, transparent);
+    backdrop-filter: blur(4px);
+
+    &:hover {
+      background-color: color-mix(in oklch, color('primary') 80%, transparent);
+      color: color('primary-foreground');
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border-color: color-mix(in oklch, color('primary') 30%, transparent);
+    }
+
+    &--active {
+      background-color: color('primary');
+      color: color('primary-foreground');
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &__nav-icon {
+    height: 1.3rem;
+    width: 1.3rem;
+  }
+
+  &__nav-text {
+    white-space: nowrap;
+  }
+}
+
+@keyframes themeIconTransition {
+  0% {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}

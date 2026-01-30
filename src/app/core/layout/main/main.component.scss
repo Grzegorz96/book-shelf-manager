@@ -1,0 +1,11 @@
+@use 'abstracts' as *;
+
+:host {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.main {
+  margin-block: 2rem;
+}

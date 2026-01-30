@@ -1,0 +1,51 @@
+<router-outlet />
+<section class="books">
+  <div class="books__header">
+    <h2 class="books__title">My Books</h2>
+    <app-filter-bar
+      (filterOutput)="handleFilterOutput($event)"
+      [isDisabled]="booksResource.isLoading() || !!booksResource.error()"
+    />
+    <button
+      [disabled]="booksResource.isLoading() || !!booksResource.error()"
+      class="books__add-button app-button app-button--primary"
+      (click)="handleAddBook()"
+      aria-label="Add book"
+    >
+      <lucide-angular name="BookPlus" class="books__add-button-icon" />
+      <span>Add Book</span>
+    </button>
+  </div>
+
+  <div class="books__grid-section">
+    @if (booksResource.isLoading()) {
+      <div class="books__grid">
+        @for (i of skeletons; track $index) {
+          <app-book-card-skeleton />
+        }
+      </div>
+    } @else if (booksResource.hasValue()) {
+      <div class="books__grid">
+        @for (book of filteredBooks(); track book.id) {
+          <app-book-card
+            [book]="book"
+            (onEdit)="handleEditBook($event)"
+            (onDelete)="handleDeleteBook($event)"
+            (onToggleFavorite)="handleToggleFavorite($event.id, $event.isFavorite)"
+            (onViewDetails)="handleViewDetails($event)"
+          />
+        } @empty {
+          <div class="books__empty">
+            @if (filterGenre()) {
+              <p class="books__empty-text">
+                No books found matching the genre "{{ filterGenre() }}".
+              </p>
+            } @else {
+              <p class="books__empty-text">Your library is empty. Add your first book!</p>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

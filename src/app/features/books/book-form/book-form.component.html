@@ -1,0 +1,122 @@
+@if (bookResource.isLoading()) {
+<app-book-modal [loader]="true" loaderText="Loading book..." />
+} @if (!bookResource.error() && !bookResource.isLoading()) {
+<app-book-modal (close)="handleCancel()">
+  <form (submit)="handleSubmit($event)" class="book-form">
+    <h3 class="book-form__title">{{ bookResource.value() ? 'Edit Book' : 'Add New Book' }}</h3>
+
+    <div class="book-form__field">
+      <label for="title" class="book-form__label">Title *</label>
+      <input
+        id="title"
+        type="text"
+        [formField]="bookForm.title"
+        class="book-form__input"
+        [class.book-form__input--error]="bookForm.title().invalid() && bookForm.title().touched()"
+      />
+      @if (bookForm.title().invalid() && bookForm.title().touched()) { @for (error of
+      bookForm.title().errors(); track error.kind) {
+      <span class="book-form__error">
+        {{ error.message }}
+      </span>
+      } }
+    </div>
+
+    <div class="book-form__field">
+      <label for="author" class="book-form__label">Author *</label>
+      <input
+        id="author"
+        type="text"
+        [formField]="bookForm.author"
+        class="book-form__input"
+        [class.book-form__input--error]="bookForm.author().invalid() && bookForm.author().touched()"
+      />
+      @if (bookForm.author().invalid() && bookForm.author().touched()) { @for (error of
+      bookForm.author().errors(); track error.kind) {
+      <span class="book-form__error">
+        {{ error.message }}
+      </span>
+      } }
+    </div>
+
+    <div class="book-form__field">
+      <label for="year" class="book-form__label">Year *</label>
+      <input
+        id="year"
+        type="number"
+        [formField]="bookForm.year"
+        class="book-form__input"
+        [class.book-form__input--error]="bookForm.year().invalid() && bookForm.year().touched()"
+      />
+      @if (bookForm.year().invalid() && bookForm.year().touched()) { @for (error of
+      bookForm.year().errors(); track error.kind) {
+      <span class="book-form__error">
+        {{ error.message }}
+      </span>
+      } }
+    </div>
+
+    <div class="book-form__field">
+      <label for="genre" class="book-form__label">Genre *</label>
+      <input
+        id="genre"
+        type="text"
+        [formField]="bookForm.genre"
+        class="book-form__input"
+        [class.book-form__input--error]="bookForm.genre().invalid() && bookForm.genre().touched()"
+      />
+      @if (bookForm.genre().invalid() && bookForm.genre().touched()) { @for (error of
+      bookForm.genre().errors(); track error.kind) {
+      <span class="book-form__error">
+        {{ error.message }}
+      </span>
+      } }
+    </div>
+
+    <div class="book-form__field">
+      <label for="description" class="book-form__label">Description *</label>
+      <textarea
+        id="description"
+        [formField]="bookForm.description"
+        rows="4"
+        class="book-form__textarea"
+        [class.book-form__textarea--error]="
+          bookForm.description().invalid() && bookForm.description().touched()
+        "
+      ></textarea>
+      @if (bookForm.description().invalid() && bookForm.description().touched()) { @for (error of
+      bookForm.description().errors(); track error.kind) {
+      <span class="book-form__error">
+        {{ error.message }}
+      </span>
+      } }
+    </div>
+
+    <div class="book-form__field">
+      <Label class="book-form__checkbox-label">
+        <input type="checkbox" [formField]="bookForm.isFavorite" class="book-form__checkbox" />
+
+        @if (bookForm.isFavorite().value()) {
+        <lucide-angular name="SquareCheck" class="book-form__checkbox-icon" />
+        } @else {
+        <lucide-angular name="Square" class="book-form__checkbox-icon" />
+        }
+        <span>Mark as favorite</span>
+      </Label>
+    </div>
+
+    <div class="book-form__actions">
+      <button
+        type="submit"
+        class="app-button app-button--primary"
+        [disabled]="bookForm().invalid()"
+      >
+        {{ bookResource.value() ? 'Update' : 'Add' }} Book
+      </button>
+      <button type="button" class="app-button app-button--secondary" (click)="handleCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</app-book-modal>
+}
