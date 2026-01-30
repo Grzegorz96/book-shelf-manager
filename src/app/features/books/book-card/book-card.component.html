@@ -31,7 +31,7 @@
     <div class="book-card__actions">
       <div class="book-card__icon-actions">
         <button
-          class="book-card__icon-btn"
+          class="book-card__icon-button"
           (click)="handleToggleFavorite()"
           [attr.aria-label]="book().isFavorite ? 'Remove from favorites' : 'Add to favorites'"
         >
@@ -41,14 +41,19 @@
             [class.book-card__icon--favorite]="book().isFavorite"
           />
         </button>
-        <button class="book-card__icon-btn" (click)="handleEdit()" aria-label="Edit book">
+        <button class="book-card__icon-button" (click)="handleEdit()" aria-label="Edit book">
           <lucide-angular name="SquarePen" class="book-card__icon book-card__icon--edit" />
         </button>
-        <button class="book-card__icon-btn" (click)="handleDelete()" aria-label="Delete book">
+        <button class="book-card__icon-button" (click)="handleDelete()" aria-label="Delete book">
           <lucide-angular name="Trash2" class="book-card__icon book-card__icon--delete" />
         </button>
       </div>
-      <button class="book-card__btn-details" (click)="handleViewDetails()">Details</button>
+      <button
+        class="app-button app-button--primary book-card__button-details"
+        (click)="handleViewDetails()"
+      >
+        Details
+      </button>
     </div>
   </div>
 </article>

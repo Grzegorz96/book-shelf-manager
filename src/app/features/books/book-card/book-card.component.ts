@@ -10,13 +10,13 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class BookCardComponent {
   readonly book = input.required<Book>();
-  readonly onEdit = output<Book>();
+  readonly onEdit = output<string>();
   readonly onDelete = output<string>();
   readonly onToggleFavorite = output<{ id: string; isFavorite: boolean }>();
-  readonly onViewDetails = output<Book>();
+  readonly onViewDetails = output<string>();
 
   handleEdit() {
-    this.onEdit.emit(this.book());
+    this.onEdit.emit(this.book().id);
   }
 
   handleDelete() {
@@ -31,6 +31,6 @@ export class BookCardComponent {
   }
 
   handleViewDetails() {
-    this.onViewDetails.emit(this.book());
+    this.onViewDetails.emit(this.book().id);
   }
 }

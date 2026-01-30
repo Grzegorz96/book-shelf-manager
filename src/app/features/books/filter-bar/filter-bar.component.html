@@ -10,7 +10,7 @@
     @if (filterForm.controls.bookByGenre.value) {
       <button
         type="button"
-        class="filter-bar__clear-btn"
+        class="filter-bar__clear-button"
         (click)="clearFilter()"
         aria-label="Clear filter"
       >
@@ -20,7 +20,7 @@
   </div>
   <button
     type="submit"
-    class="filter-bar__submit-btn"
+    class="app-button app-button--primary filter-bar__submit-button"
     aria-label="Apply filter"
     [disabled]="isDisabled()"
   >

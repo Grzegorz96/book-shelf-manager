@@ -81,6 +81,10 @@
     font-size: size('font-sm');
     color: color('foreground');
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   &__checkbox-icon {
@@ -98,41 +102,5 @@
     @include flex-layout($justify: flex-end, $align: center);
     gap: 0.75rem;
     flex-wrap: wrap;
-  }
-
-  &__button {
-    border-radius: size('radius-lg');
-    padding: 0.5rem 0.9rem;
-    font-size: size('font-sm');
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    cursor: pointer;
-    &--submit {
-      background-color: color('primary');
-      color: color('primary-foreground');
-
-      &:hover:not(:disabled) {
-        background-color: color-mix(in oklch, color('primary') 90%, transparent);
-        box-shadow:
-          0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        border-color: color-mix(in oklch, color('primary') 30%, transparent);
-      }
-
-      &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-    &--cancel {
-      border: 1px solid color('border');
-      background-color: color('background');
-      color: color('foreground');
-
-      &:hover {
-        background-color: color('muted');
-      }
-    }
   }
 }

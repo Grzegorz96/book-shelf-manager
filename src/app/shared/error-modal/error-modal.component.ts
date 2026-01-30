@@ -1,15 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { ErrorModalState } from './error-modal.interface';
 import { ScrollLockDirective } from '@core/services';
+import { BackdropClickDirective } from '@core/directives';
 import { ErrorModalService } from './error-modal.service';
-
-const DEFAULT_PRIMARY_ACTION_LABEL: string = 'OK';
-const DEFAULT_SECONDARY_ACTION_LABEL: string = 'Dismiss';
 
 @Component({
   selector: 'app-error-modal',
-  imports: [LucideAngularModule, ScrollLockDirective],
+  imports: [LucideAngularModule, ScrollLockDirective, BackdropClickDirective],
   templateUrl: './error-modal.component.html',
   styleUrl: './error-modal.component.scss',
 })
@@ -21,15 +18,7 @@ export class ErrorModalComponent {
     this.errorModalService.closeErrorModal();
   }
 
-  protected handlePrimaryActionClick(): void {
-    this.errorModalService.executePrimaryAction();
-  }
-
-  protected getPrimaryActionLabel(modal: ErrorModalState): string {
-    return modal.primaryActionLabel ?? DEFAULT_PRIMARY_ACTION_LABEL;
-  }
-
-  protected getSecondaryActionLabel(modal: ErrorModalState): string {
-    return modal.secondaryActionLabel ?? DEFAULT_SECONDARY_ACTION_LABEL;
+  protected handleAction(): void {
+    this.errorModalService.executeAction();
   }
 }
