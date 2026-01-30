@@ -6,7 +6,7 @@ import type { AuthResponse } from './auth-response-interface';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly AUTH_KEY = 'shelf-auth-status';
+  private readonly AUTH_KEY = 'shelfy-auth-status';
   private readonly _isAuthenticated = signal<boolean>(this.getInitialAuthStatus());
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
 

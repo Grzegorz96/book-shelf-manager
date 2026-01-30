@@ -3,7 +3,12 @@ import {
   provideBrowserGlobalErrorListeners,
   importProvidersFrom,
 } from '@angular/core';
-import { provideRouter, TitleStrategy } from '@angular/router';
+import {
+  provideRouter,
+  TitleStrategy,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+} from '@angular/router';
 import {
   LucideAngularModule,
   LibraryBig,
@@ -25,6 +30,8 @@ import {
   Clock,
   Menu,
   House,
+  Sun,
+  Moon,
 } from 'lucide-angular';
 import { TemplatePageTitleStrategy } from '@core/services';
 
@@ -33,7 +40,14 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled',
+      }),
+    ),
     { provide: TitleStrategy, useClass: TemplatePageTitleStrategy },
     importProvidersFrom(
       LucideAngularModule.pick({
@@ -56,6 +70,8 @@ export const appConfig: ApplicationConfig = {
         Clock,
         Menu,
         House,
+        Sun,
+        Moon,
       }),
     ),
   ],

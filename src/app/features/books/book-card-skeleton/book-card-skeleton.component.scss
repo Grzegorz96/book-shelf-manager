@@ -17,7 +17,9 @@
   height: 20rem;
 
   &:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
     border-color: color-mix(in oklch, color('primary') 30%, transparent);
   }
 
@@ -121,7 +123,7 @@
     gap: 0.3rem;
   }
 
-  &__icon-btn {
+  &__icon-button {
     width: 2rem;
     height: 2rem;
     border-radius: size('radius-sm');
@@ -129,7 +131,7 @@
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
-  &__btn-details {
+  &__button-details {
     height: 2rem;
     width: 4.75rem;
     border-radius: size('radius-lg');

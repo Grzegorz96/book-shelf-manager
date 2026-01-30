@@ -12,8 +12,9 @@
   padding: 3rem 1rem;
   background: linear-gradient(
     135deg,
-    color-mix(in oklch, color('primary') 5%, transparent) 0%,
-    color-mix(in oklch, color('card') 95%, transparent) 100%
+    color-mix(in oklch, color('primary') 22%, color('background')) 0%,
+    color-mix(in oklch, color('primary') 10%, color('background')) 50%,
+    color-mix(in oklch, color('muted') 50%, color('background')) 100%
   );
   border-radius: size('radius-lg');
 
@@ -25,6 +26,14 @@
     padding: 6rem 2rem;
     min-height: 70vh;
   }
+}
+
+:host-context(.dark) .not-found {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, color('primary') 5%, transparent) 0%,
+    color-mix(in oklch, color('card') 95%, transparent) 100%
+  );
 }
 
 .not-found__content {
@@ -83,28 +92,9 @@
 }
 
 .not-found__cta {
-  @include flex-layout($align: center, $justify: center);
   gap: 0.5rem;
   margin-top: 0.5rem;
-  border-radius: size('radius-lg');
   padding: 0.75rem 1.5rem;
-  font-size: size('font-sm');
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  background-color: color('primary');
-  color: color('primary-foreground');
-
-  &:hover {
-    background-color: color-mix(in oklch, color('primary') 90%, transparent);
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    border-color: color-mix(in oklch, color('primary') 30%, transparent);
-  }
 }
 
 .not-found__cta-icon {

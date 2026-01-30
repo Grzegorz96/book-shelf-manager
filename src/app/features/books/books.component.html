@@ -1,3 +1,4 @@
+<router-outlet />
 <section class="books">
   <div class="books__header">
     <h2 class="books__title">My Books</h2>
@@ -7,7 +8,7 @@
     />
     <button
       [disabled]="booksResource.isLoading() || !!booksResource.error()"
-      class="books__add-button"
+      class="books__add-button app-button app-button--primary"
       (click)="handleAddBook()"
       aria-label="Add book"
     >
@@ -15,36 +16,6 @@
       <span>Add Book</span>
     </button>
   </div>
-
-  @if (booksState().showForm) {
-    <div class="books__overlay" appScrollLock (click)="handleCancelForm()">
-      <div class="books__overlay-content" (click)="$event.stopPropagation()">
-        <button class="books__close-button" (click)="handleCancelForm()" aria-label="Close">
-          <lucide-angular name="X" class="books__close-button-icon" />
-        </button>
-        <app-book-form
-          [book]="booksState().editingBook"
-          (onSave)="handleSaveBook($event)"
-          (onCancel)="handleCancelForm()"
-        />
-      </div>
-    </div>
-  } @else if (booksState().detailedBook) {
-    <div class="books__overlay" appScrollLock (click)="handleCloseDetails()">
-      <div class="books__overlay-content" (click)="$event.stopPropagation()">
-        <button class="books__close-button" (click)="handleCloseDetails()" aria-label="Close">
-          <lucide-angular name="X" class="books__close-button-icon" />
-        </button>
-        @defer (on immediate) {
-          <app-book-details [book]="booksState().detailedBook!" />
-        } @placeholder {
-          <div class="books__placeholder">Loading details...</div>
-        } @loading (minimum 500ms) {
-          <div class="books__loading">Loading book details...</div>
-        }
-      </div>
-    </div>
-  }
 
   <div class="books__grid-section">
     @if (booksResource.isLoading()) {

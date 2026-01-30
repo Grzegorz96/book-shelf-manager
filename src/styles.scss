@@ -1,9 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'base';
+@use 'components';
 
 :root {
   --geist-font-sans: 'Geist', system-ui, sans-serif;
   --radius: 0.625rem;
+  /* Light theme (default) */
+  --background: oklch(98% 0.005 180);
+  --foreground: oklch(20% 0.006 180);
+  --card: oklch(100% 0 0 / 0.92);
+  --card-foreground: oklch(20% 0.006 180);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(20% 0.006 180);
+  --primary: oklch(0.8 0.15 180);
+  --primary-foreground: oklch(98% 0.005 180);
+  --secondary: oklch(96% 0.002 180);
+  --secondary-foreground: oklch(20% 0.006 180);
+  --muted: oklch(96% 0.002 180);
+  --muted-foreground: oklch(50% 0.004 180);
+  --accent: oklch(0.75 0.15 85);
+  --accent-foreground: oklch(98% 0.005 180);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(90% 0.002 180);
+  --input: oklch(96% 0.002 180);
+  --ring: oklch(0.8 0.15 180);
+  --sidebar: oklch(98% 0.005 180);
+  --sidebar-foreground: oklch(20% 0.006 180);
+  --sidebar-primary: oklch(0.8 0.15 180);
+  --sidebar-primary-foreground: oklch(98% 0.005 180);
+  --sidebar-accent: oklch(96% 0.002 180);
+  --sidebar-accent-foreground: oklch(20% 0.006 180);
+  --sidebar-border: oklch(90% 0.002 180);
+  --sidebar-ring: oklch(0.8 0.15 180);
+}
+
+.dark {
+  /* Dark theme */
   --background: oklch(24.747% 0.00616 179.401);
   --foreground: oklch(93.9% 0.00551 184.133);
   --card: oklch(0.95 0.01 180 / 0.08);
