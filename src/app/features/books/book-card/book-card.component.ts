@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Book } from '../book.interface';
+import { type Book } from '../models';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -12,7 +12,7 @@ export class BookCardComponent {
   readonly book = input.required<Book>();
   readonly onEdit = output<string>();
   readonly onDelete = output<string>();
-  readonly onToggleFavorite = output<{ id: string; isFavorite: boolean }>();
+  readonly onToggleFavorite = output<string>();
   readonly onViewDetails = output<string>();
 
   handleEdit() {
@@ -24,10 +24,7 @@ export class BookCardComponent {
   }
 
   handleToggleFavorite() {
-    this.onToggleFavorite.emit({
-      id: this.book().id,
-      isFavorite: !this.book().isFavorite,
-    });
+    this.onToggleFavorite.emit(this.book().id);
   }
 
   handleViewDetails() {

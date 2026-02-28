@@ -1,54 +1,44 @@
 import { Component, signal, inject } from '@angular/core';
-import { RouterLinkActive, RouterLink, Router } from '@angular/router';
+import { RouterLinkActive, RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import { Store } from '@ngrx/store';
 import { LogoComponent } from '@shared/logo';
-import { AuthService, ThemeService } from '@core/services';
+import { authFeature, AuthPageActions } from '@app/core/state/auth';
+import { themeFeature, ThemeCoreActions } from '@app/core/state/theme';
+import { HeaderStore } from './header.store';
 
 @Component({
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive, LucideAngularModule, LogoComponent],
+  providers: [HeaderStore],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  private readonly authService = inject(AuthService);
-  private readonly themeService = inject(ThemeService);
-  protected readonly isAuthenticated = this.authService.isAuthenticated;
-  protected readonly isDark = this.themeService.isDark;
-  private readonly router = inject(Router);
-  protected readonly isMenuOpen = signal(false);
+  private readonly store = inject(Store);
+  private readonly headerStore = inject(HeaderStore);
+
+  protected readonly isAuthenticated = this.store.selectSignal(authFeature.selectIsAuthenticated);
+  protected readonly isDark = this.store.selectSignal(themeFeature.selectIsDark);
+  protected readonly vm = this.headerStore.state;
 
   protected toggleMenu(): void {
-    this.isMenuOpen.update((open) => !open);
+    this.headerStore.toggleMenu();
   }
 
   protected closeMenu(): void {
-    this.isMenuOpen.set(false);
+    this.headerStore.closeMenu();
   }
 
-  /** Closes the dropdown only when it is open (mobile view). No-op when nav is always visible. */
   protected closeMenuIfOpen(): void {
-    if (this.isMenuOpen()) {
-      this.closeMenu();
-    }
+    this.headerStore.closeMenuIfOpen();
   }
 
   protected toggleTheme(): void {
-    this.themeService.toggleTheme();
+    this.store.dispatch(ThemeCoreActions.toggle());
   }
 
-  protected readonly routes = signal([
-    {
-      label: 'Books',
-      icon: 'LibraryBig',
-      path: '/books',
-    },
-  ]);
-
   protected handleLogout(): void {
-    const response = this.authService.logout();
-    if (response.success) {
-      this.router.navigate(['/']);
-    }
+    this.store.dispatch(AuthPageActions.logout());
   }
 }

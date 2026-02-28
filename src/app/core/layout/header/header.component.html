@@ -11,9 +11,9 @@
     </a>
 
     <div class="header__right">
-      <nav class="header__nav" [class.header__nav--open]="isMenuOpen()">
+      <nav class="header__nav" [class.header__nav--open]="vm().isMenuOpen">
         <ul class="header__nav-list">
-          @for (route of routes(); track route.path) {
+          @for (route of vm().routes; track route.path) {
             <li>
               <a
                 [routerLink]="route.path"
@@ -73,7 +73,7 @@
           aria-label="Toggle menu"
           (click)="toggleMenu()"
         >
-          @if (isMenuOpen()) {
+          @if (vm().isMenuOpen) {
             <lucide-angular name="X" class="header__hamburger-icon" />
           } @else {
             <lucide-angular name="Menu" class="header__hamburger-icon" />

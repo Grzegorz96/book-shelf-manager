@@ -1,37 +1,27 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, output, inject } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { form, required, submit, minLength, FormField, email } from '@angular/forms/signals';
-import type { AuthCredentials } from '@core/services';
+import { FormField } from '@angular/forms/signals';
+import type { AuthCredentials } from '@core/state/auth';
+import { AuthFormStore } from './auth-form.store';
 
 @Component({
   selector: 'app-auth-form',
   imports: [LucideAngularModule, FormField],
+  providers: [AuthFormStore],
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.scss',
 })
 export class AuthFormComponent {
+  private readonly authFormStore = inject(AuthFormStore);
   readonly onSubmit = output<AuthCredentials>();
-  private readonly _authFormSignal = signal<AuthCredentials>({
-    email: '',
-    password: '',
-  });
 
-  protected readonly authForm = form(this._authFormSignal, (fieldPath) => {
-    required(fieldPath.email, { message: 'Email is required' });
-    email(fieldPath.email, { message: 'Invalid email address' });
-    required(fieldPath.password, { message: 'Password is required' });
-    minLength(fieldPath.password, 8, { message: 'Password must be at least 8 characters' });
-  });
+  protected readonly authForm = this.authFormStore.authForm;
 
   handleSubmit(event: Event): void {
     event.preventDefault();
-    submit(this.authForm, async (form) => {
-      const credentials = form().value();
 
-      this.onSubmit.emit({
-        email: credentials.email,
-        password: credentials.password,
-      });
+    this.authFormStore.submit((credentials) => {
+      this.onSubmit.emit(credentials);
     });
   }
 }

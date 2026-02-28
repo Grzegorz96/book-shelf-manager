@@ -1,4 +1,5 @@
 ---
+description: Angular and TypeScript standards for this project — components, services, templates, signals, accessibility (WCAG AA), and state management. Apply when writing or editing Angular/TypeScript code.
 context: true
 priority: high
 scope: project

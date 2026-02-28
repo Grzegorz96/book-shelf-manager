@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { AuthFormComponent } from './auth-form';
-import { AuthService, type AuthCredentials } from '@core/services';
-import { Router } from '@angular/router';
+import type { AuthCredentials } from '@core/state/auth';
+import { Store } from '@ngrx/store';
+import { AuthPageActions } from '@core/state/auth';
 
 @Component({
   selector: 'app-auth',
@@ -10,13 +11,9 @@ import { Router } from '@angular/router';
   styleUrl: './auth.component.scss',
 })
 export class AuthComponent {
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
+  private readonly store = inject(Store);
 
   handleSubmit(credentials: AuthCredentials): void {
-    const response = this.authService.login(credentials);
-    if (response.success) {
-      this.router.navigate(['/']);
-    }
+    this.store.dispatch(AuthPageActions.login({ credentials }));
   }
 }
