@@ -1,14 +1,14 @@
-import { Injectable, computed, inject, effect } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Book } from '../models';
 import { Store } from '@ngrx/store';
 import { BooksApi } from '../books.api';
-import { RouterActions, selectRouteParam } from '@app/core/state/router';
+import { RouterActions } from '@app/core/state/router';
 import { EMPTY, filter, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { toErrorMessage } from '@app/core/utils';
 import { ErrorModalActions } from '@app/shared/error-modal/state';
-import { bookFeature } from '../state/book.feature';
+import { bookFeature } from '../state';
 
 interface BookDetailsState {
   data: Book | null;
@@ -20,8 +20,11 @@ interface BookDetailsState {
 export class BookDetailsStore extends ComponentStore<BookDetailsState> {
   private readonly store = inject(Store);
   private readonly booksApi = inject(BooksApi);
-  private readonly bookId = this.store.selectSignal(selectRouteParam('id'));
   private readonly currentBook = this.store.selectSignal(bookFeature.selectCurrentBook);
+
+  constructor() {
+    super({ data: null, isLoading: false, error: null });
+  }
 
   readonly loadBook = this.effect<string | undefined>((id$) =>
     id$.pipe(
@@ -54,14 +57,6 @@ export class BookDetailsStore extends ComponentStore<BookDetailsState> {
       }),
     ),
   );
-
-  constructor() {
-    super({ data: null, isLoading: false, error: null });
-
-    effect(() => {
-      this.loadBook(this.bookId());
-    });
-  }
 
   handleClose(): void {
     this.store.dispatch(RouterActions.navigate({ path: ['/books'] }));

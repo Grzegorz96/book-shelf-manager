@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal, effect } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
@@ -72,6 +72,10 @@ export class BookFormStore extends ComponentStore<BookFormState> {
     minLength(fieldPath.genre, 2, { message: 'Genre must be at least 2 character' });
   });
 
+  constructor() {
+    super({ data: null, isLoading: false, error: null });
+  }
+
   readonly loadBook = this.effect<string | undefined>((id$) =>
     id$.pipe(
       filter((id): id is string => !!id),
@@ -103,14 +107,6 @@ export class BookFormStore extends ComponentStore<BookFormState> {
       }),
     ),
   );
-
-  constructor() {
-    super({ data: null, isLoading: false, error: null });
-
-    effect(() => {
-      this.loadBook(this.bookId());
-    });
-  }
 
   handleSubmit(): void {
     submit(this.bookForm, async (form) => {

@@ -3,6 +3,8 @@ import { LucideAngularModule } from 'lucide-angular';
 import { ReadingTimePipe } from '@core/pipes';
 import { BookModalComponent } from '../book-modal';
 import { BookDetailsStore } from './book-details.store';
+import { Store } from '@ngrx/store';
+import { selectRouteParam } from '@app/core/state/router';
 
 @Component({
   selector: 'app-book-details',
@@ -12,8 +14,14 @@ import { BookDetailsStore } from './book-details.store';
   styleUrl: './book-details.component.scss',
 })
 export class BookDetailsComponent {
+  private readonly store = inject(Store);
   private readonly bookDetailsStore = inject(BookDetailsStore);
   protected readonly vm = this.bookDetailsStore.state;
+  private readonly bookId$ = this.store.select(selectRouteParam('id'));
+
+  constructor() {
+    this.bookDetailsStore.loadBook(this.bookId$);
+  }
 
   handleClose(): void {
     this.bookDetailsStore.handleClose();
