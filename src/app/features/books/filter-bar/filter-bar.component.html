@@ -1,6 +1,7 @@
 <form [formGroup]="filterForm" (submit)="applyFilter()" class="filter-bar">
   <div class="filter-bar__input-wrapper">
     <input
+      autocomplete="off"
       id="filter-book-by-genre"
       type="text"
       placeholder="Filter by genre..."

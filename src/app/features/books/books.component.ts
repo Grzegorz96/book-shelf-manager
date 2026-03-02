@@ -1,11 +1,13 @@
-import { Component, inject, signal, resource, effect, computed } from '@angular/core';
-import { BooksService } from './books.service';
+import { Component, inject, signal, computed } from '@angular/core';
 import { BookCardComponent } from './book-card/book-card.component';
 import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton.component';
 import { LucideAngularModule } from 'lucide-angular';
-import { ErrorModalService } from '@shared/error-modal';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { Router, RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { bookFeature } from './state';
+import { BookPageActions } from './state/book.actions';
+import { RouterActions } from '@app/core/state/router';
 
 @Component({
   selector: 'app-books',
@@ -20,82 +22,51 @@ import { Router, RouterOutlet } from '@angular/router';
   styleUrl: './books.component.scss',
 })
 export class BooksComponent {
-  private readonly router = inject(Router);
-  private readonly booksService = inject(BooksService);
-  private readonly errorModalService = inject(ErrorModalService);
-  protected readonly booksResource = this.booksService.booksResource;
+  private readonly store = inject(Store);
+
   protected readonly skeletons = Array(9).fill(0);
   protected readonly filterGenre = signal<string>('');
 
-  constructor() {
-    effect(() => {
-      if (this.booksResource.error()) {
-        this.errorModalService.openErrorModal({
-          title: 'Error loading books',
-          message: 'An error occurred while loading the books.',
-          actionLabel: 'Retry',
-          onAction: (): void => {
-            this.booksService.reloadCache();
-          },
-        });
-      }
-    });
-  }
+  protected readonly vm = this.store.selectSignal(bookFeature.selectVm);
 
   protected readonly filteredBooks = computed(() => {
-    if (!this.booksResource.hasValue()) return [];
-
-    const allBooks = this.booksResource.value();
+    const books = this.vm().books ?? [];
     const filter = this.filterGenre().toLowerCase().trim();
-
-    if (!filter) return allBooks;
-
-    return allBooks.filter((book) => book.genre.toLowerCase().includes(filter));
+    if (!filter) return books;
+    return books.filter((book) => book.genre.toLowerCase().includes(filter));
   });
 
-  async handleDeleteBook(id: string): Promise<void> {
+  constructor() {
+    this.store.dispatch(BookPageActions.loadBooks());
+  }
+
+  handleRetry(): void {
+    this.store.dispatch(BookPageActions.loadBooks());
+  }
+
+  handleDeleteBook(id: string): void {
     if (confirm('Are you sure you want to delete this book?')) {
-      try {
-        const deletedBook = await this.booksService.deleteBook(id);
-        this.booksService.updateCacheAfterDelete(deletedBook.id);
-      } catch {
-        this.errorModalService.openErrorModal({
-          title: 'Error deleting book',
-          message: 'An error occurred while deleting the book.',
-          actionLabel: 'Retry',
-          onAction: (): Promise<void> => this.handleDeleteBook(id),
-        });
-      }
+      this.store.dispatch(BookPageActions.deleteBook({ id }));
     }
   }
 
-  async handleToggleFavorite(id: string, isFavorite: boolean): Promise<void> {
-    try {
-      const updatedBook = await this.booksService.toggleFavorite(id, isFavorite);
-      this.booksService.updateCacheAfterToggleFavorite(updatedBook);
-    } catch {
-      this.errorModalService.openErrorModal({
-        title: 'Error updating favorite',
-        message: 'An error occurred while updating the book.',
-        actionLabel: 'Retry',
-        onAction: (): Promise<void> => this.handleToggleFavorite(id, isFavorite),
-      });
-    }
+  handleToggleFavorite(id: string): void {
+    this.store.dispatch(BookPageActions.toggleFavorite({ id }));
   }
 
-  handleFilterOutput(category: string) {
+  handleFilterOutput(category: string): void {
     this.filterGenre.set(category);
   }
 
-  handleViewDetails(id: string) {
-    this.router.navigate(['/books', id, 'details']);
+  handleViewDetails(id: string): void {
+    this.store.dispatch(RouterActions.navigate({ path: ['/books', id, 'details'] }));
   }
 
-  handleAddBook() {
-    this.router.navigate(['/books/new']);
+  handleAddBook(): void {
+    this.store.dispatch(RouterActions.navigate({ path: ['/books/new'] }));
   }
 
-  handleEditBook(id: string) {
-    this.router.navigate(['/books', id, 'edit']);
+  handleEditBook(id: string): void {
+    this.store.dispatch(RouterActions.navigate({ path: ['/books', id, 'edit'] }));
   }
 }

@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { LucideAngularModule } from 'lucide-angular';
-import { ScrollLockDirective } from '@core/services';
+import { ScrollLockDirective } from '@core/state/scroll';
 import { BackdropClickDirective } from '@core/directives';
-import { ErrorModalService } from './error-modal.service';
+import { errorModalFeature } from './state';
+import { ErrorModalActions } from './state/error.actions';
 
 @Component({
   selector: 'app-error-modal',
@@ -11,14 +13,14 @@ import { ErrorModalService } from './error-modal.service';
   styleUrl: './error-modal.component.scss',
 })
 export class ErrorModalComponent {
-  private readonly errorModalService = inject(ErrorModalService);
-  readonly modalState = this.errorModalService.state;
+  private readonly store = inject(Store);
+  readonly modalState = this.store.selectSignal(errorModalFeature.selectVm);
 
   protected handleDismiss(): void {
-    this.errorModalService.closeErrorModal();
+    this.store.dispatch(ErrorModalActions.close());
   }
 
   protected handleAction(): void {
-    this.errorModalService.executeAction();
+    this.store.dispatch(ErrorModalActions.executeAction());
   }
 }

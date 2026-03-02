@@ -5,8 +5,7 @@
 }
 
 .book-details {
-  padding-block: 1rem;
-  padding-inline: 0.5rem;
+  padding: 1rem;
   border: 1px solid color('border');
   border-radius: size('radius-lg');
   background-color: color('card');
@@ -94,6 +93,5 @@
     font-size: size('font-sm');
     color: color('foreground');
     line-height: 1.7;
-    text-align: justify;
   }
 }

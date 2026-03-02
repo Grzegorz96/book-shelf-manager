@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { AuthService } from '@core/services';
+import { Store } from '@ngrx/store';
+import { authFeature } from '@app/core/state/auth';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { AuthService } from '@core/services';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  private readonly authService = inject(AuthService);
-  protected readonly isAuthenticated = this.authService.isAuthenticated;
+  private readonly store = inject(Store);
+
+  protected readonly isAuthenticated = this.store.selectSignal(authFeature.selectIsAuthenticated);
 }
