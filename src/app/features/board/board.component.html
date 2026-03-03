@@ -1,0 +1,39 @@
+@if (isLoading()) {
+  <app-board-skeleton />
+} @else {
+  <section class="board" cdkDropListGroup>
+    @for (column of columns(); track column.id) {
+      <div class="board__column">
+        <header class="board__column-header">
+          <h2 class="board__column-title">{{ column.title }}</h2>
+          <span class="board__column-count" aria-hidden="true">{{ column.items.length }}</span>
+        </header>
+        <div
+          class="board__column-content"
+          cdkDropList
+          [id]="column.id"
+          [cdkDropListData]="column.items"
+          (cdkDropListDropped)="handleDrop($event)"
+        >
+          @for (item of column.items; track item.id) {
+            <div class="board__item" cdkDrag [cdkDragData]="item">
+              <div class="board__item-header">
+                <span class="board__item-genre">{{ item.genre }}</span>
+                @if (item.isFavorite) {
+                  <lucide-angular name="Star" class="board__item-favorite" aria-hidden="true" />
+                }
+              </div>
+              <h3 class="board__item-title">{{ item.title }}</h3>
+              <div class="board__item-meta">
+                <span class="board__item-author">{{ item.author }}</span>
+                <span class="board__item-year" aria-label="Rok wydania">{{ item.year }}</span>
+              </div>
+            </div>
+          } @empty {
+            <p class="board__empty">No items</p>
+          }
+        </div>
+      </div>
+    }
+  </section>
+}

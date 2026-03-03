@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { type Book } from './models';
+import { type Book, type BookReadingStatus } from './models';
+
 import { delay, Observable, timer, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -55,5 +56,17 @@ export class BooksApi {
     //   ),
     // );
     return this.http.patch<Book>(`${this.baseUrl}/books/${id}`, { isFavorite }).pipe(delay(200));
+  }
+
+  public updateBookPosition(
+    id: string,
+    status: BookReadingStatus,
+    order: string,
+  ): Observable<Book> {
+    const position = { status, order };
+    // return timer(1000).pipe(
+    //   switchMap(() => throwError(() => new Error('Symulowany błąd aktualizacji pozycji książki'))),
+    // );
+    return this.http.patch<Book>(`${this.baseUrl}/books/${id}`, position).pipe(delay(300));
   }
 }

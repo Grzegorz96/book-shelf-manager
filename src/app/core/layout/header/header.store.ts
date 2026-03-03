@@ -17,6 +17,11 @@ export class HeaderStore extends ComponentStore<HeaderState> {
           icon: 'LibraryBig',
           path: '/books',
         },
+        {
+          label: 'Board',
+          icon: 'Kanban',
+          path: '/board',
+        },
       ],
     });
   }
