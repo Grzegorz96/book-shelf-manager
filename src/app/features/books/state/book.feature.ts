@@ -1,8 +1,10 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
-import { Book } from '../models';
+import { Book, BookReadingStatus } from '../models';
 import { createReducer, on, createFeature, createSelector } from '@ngrx/store';
 import { BookPageActions, BookApiActions } from './book.actions';
 import { selectRouteParams } from '@app/core/state/router';
+import { BoardColumn } from '@app/features/board/models';
+import { DEFAULT_BOOK_STATUS } from './book.constants';
 
 export interface State extends EntityState<Book> {
   error: string | null;
@@ -12,6 +14,10 @@ export interface State extends EntityState<Book> {
 }
 
 const adapter = createEntityAdapter<Book>();
+
+// const adapter = createEntityAdapter<Book>({
+//   sortComparer: (a, b) => a.order.localeCompare(b.order)
+// });
 
 export const initialState: State = adapter.getInitialState({
   error: null,
@@ -66,6 +72,12 @@ const reducer = createReducer(
   on(BookApiActions.toggleFavoriteSuccess, (state, { id }) =>
     adapter.updateOne({ id, changes: { isFavorite: !state.entities[id]?.isFavorite } }, state),
   ),
+  on(BookPageActions.updateBookPosition, (state, { id, newStatus, newOrder }) =>
+    adapter.updateOne({ id, changes: { status: newStatus, order: newOrder } }, state),
+  ),
+  on(BookApiActions.updateBookPositionFailure, (state, { id, oldStatus, oldOrder }) =>
+    adapter.updateOne({ id, changes: { status: oldStatus, order: oldOrder } }, state),
+  ),
 );
 
 export const bookFeature = createFeature({
@@ -82,10 +94,50 @@ export const bookFeature = createFeature({
       (params, entities) => (params['id'] ? entities[params['id']] : undefined),
     );
 
+    const selectColumns = createSelector(adapterSelectors.selectAll, (books): BoardColumn[] => {
+      const statuses: { id: BookReadingStatus; title: string }[] = [
+        { id: 'todo', title: 'To do' },
+        { id: 'in-progress', title: 'In progress' },
+        { id: 'done', title: 'Done' },
+      ];
+
+      return statuses.map((status) => ({
+        id: status.id,
+        title: status.title,
+        items: books
+          .filter((book) => book.status === status.id)
+          .sort((a, b) => (a.order < b.order ? -1 : a.order > b.order ? 1 : 0))
+          .map((book) => ({
+            id: book.id,
+            title: book.title,
+            author: book.author,
+            year: book.year,
+            genre: book.genre,
+            isFavorite: book.isFavorite,
+            order: book.order,
+          })),
+      }));
+    });
+
+    const selectLastOrderInTodo = createSelector(
+      adapterSelectors.selectAll,
+      (books): string | null => {
+        const booksInStatus = books
+          .filter((b) => b.status === DEFAULT_BOOK_STATUS)
+          .sort((a, b) => (a.order < b.order ? -1 : 1));
+
+        const lastBook = booksInStatus[booksInStatus.length - 1];
+
+        return lastBook?.order ?? null;
+      },
+    );
+
     return {
       ...adapterSelectors,
       selectHasData,
       selectCurrentBook,
+      selectColumns,
+      selectLastOrderInTodo,
       selectVm: createSelector(
         adapterSelectors.selectAll,
         selectIsLoading,

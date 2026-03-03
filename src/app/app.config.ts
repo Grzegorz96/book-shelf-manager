@@ -33,6 +33,7 @@ import {
   House,
   Sun,
   Moon,
+  Kanban,
 } from 'lucide-angular';
 import { TemplatePageTitleStrategy } from '@core/strategies';
 import { httpErrorInterceptor } from '@core/interceptors';
@@ -47,6 +48,7 @@ import { themeFeature, ThemeEffects } from '@app/core/state/theme';
 import { scrollFeature, ScrollEffects } from '@app/core/state/scroll';
 import { CustomSerializer, RouterEffects } from '@app/core/state/router';
 import { errorModalFeature, ErrorModalEffects } from '@shared/error-modal/state';
+import { bookFeature, BookEffects } from '@app/features/books/state';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -84,6 +86,7 @@ export const appConfig: ApplicationConfig = {
         House,
         Sun,
         Moon,
+        Kanban,
       }),
     ),
     provideStore({ router: routerReducer }),
@@ -92,7 +95,15 @@ export const appConfig: ApplicationConfig = {
     provideState(themeFeature),
     provideState(scrollFeature),
     provideState(errorModalFeature),
-    provideEffects(AuthEffects, ThemeEffects, ScrollEffects, ErrorModalEffects, RouterEffects),
+    provideEffects(
+      AuthEffects,
+      ThemeEffects,
+      ScrollEffects,
+      ErrorModalEffects,
+      RouterEffects,
+      BookEffects,
+    ),
+    provideState(bookFeature),
     provideRouterStore({
       serializer: CustomSerializer,
     }),

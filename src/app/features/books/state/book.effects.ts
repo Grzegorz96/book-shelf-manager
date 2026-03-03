@@ -1,19 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom, mapResponse } from '@ngrx/operators';
-import { map, switchMap, exhaustMap } from 'rxjs/operators';
+import { map, switchMap, exhaustMap, concatMap } from 'rxjs/operators';
 import { BooksApi } from '../books.api';
 import { BookApiActions, BookPageActions } from './book.actions';
 import { Store } from '@ngrx/store';
 import { bookFeature } from './book.feature';
 import { EMPTY } from 'rxjs';
 import { ErrorModalActions } from '@app/shared/error-modal/state';
-import { toErrorMessage } from '@app/core/utils';
+import { getNewOrder, toErrorMessage } from '@app/core/utils';
 import { RouterActions } from '@app/core/state/router';
-import { BOOKS_STALE_TIME } from './book.constants';
+import { BOOKS_STALE_TIME, DEFAULT_BOOK_STATUS } from './book.constants';
 
 @Injectable()
-export class BooksEffects {
+export class BookEffects {
   private readonly actions$ = inject(Actions);
   private readonly store = inject(Store);
   private readonly booksApi = inject(BooksApi);
@@ -122,8 +122,13 @@ export class BooksEffects {
   createBook$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BookPageActions.createBook),
-      exhaustMap(({ newBook }) =>
-        this.booksApi.createBook(newBook).pipe(
+      concatLatestFrom(() => this.store.select(bookFeature.selectLastOrderInTodo)),
+      exhaustMap(([{ newBook }, lastOrder]) => {
+        const newOrder = getNewOrder(lastOrder ?? null, null);
+
+        const bookWithOrder = { ...newBook, status: DEFAULT_BOOK_STATUS, order: newOrder };
+
+        return this.booksApi.createBook(bookWithOrder).pipe(
           mapResponse({
             next: (createdBook) => BookApiActions.createBookSuccess({ createdBook }),
             error: (error: unknown) =>
@@ -132,8 +137,8 @@ export class BooksEffects {
                 retryAction: BookPageActions.createBook({ newBook }),
               }),
           }),
-        ),
-      ),
+        );
+      }),
     ),
   );
 
@@ -158,6 +163,38 @@ export class BooksEffects {
     this.actions$.pipe(
       ofType(BookApiActions.updateBookSuccess, BookApiActions.createBookSuccess),
       map(() => RouterActions.navigate({ path: ['/books'] })),
+    ),
+  );
+
+  updateBookPosition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BookPageActions.updateBookPosition),
+      concatMap(({ id, newStatus, oldStatus, newOrder, oldOrder }) =>
+        this.booksApi.updateBookPosition(id, newStatus, newOrder).pipe(
+          mapResponse({
+            next: () => BookApiActions.updateBookPositionSuccess(),
+            error: (error: unknown) =>
+              BookApiActions.updateBookPositionFailure({
+                error: toErrorMessage(error),
+                id,
+                oldStatus,
+                oldOrder,
+              }),
+          }),
+        ),
+      ),
+    ),
+  );
+
+  updateBookPositionFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BookApiActions.updateBookPositionFailure),
+      map((action) =>
+        ErrorModalActions.open({
+          title: 'Error updating book position',
+          message: action.error,
+        }),
+      ),
     ),
   );
 }

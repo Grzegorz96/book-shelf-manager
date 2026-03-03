@@ -4,21 +4,18 @@ import { tapResponse } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { filter, switchMap, tap, EMPTY } from 'rxjs';
 import { BooksApi } from '../books.api';
-import { Book } from '../models';
-import { BookPageActions } from '../state/book.actions';
+import { Book, BookFormData } from '../models';
+import { BookPageActions, bookFeature } from '@app/features/books/state';
 import { ErrorModalActions } from '@app/shared/error-modal/state';
 import { RouterActions, selectRouteParam } from '@app/core/state/router';
 import { toErrorMessage } from '@app/core/utils';
 import { form, required, minLength, max, submit } from '@angular/forms/signals';
-import { bookFeature } from '../state/book.feature';
 
 interface BookFormState {
   data: Book | null;
   isLoading: boolean;
   error: string | null;
 }
-
-type BookFormModel = Omit<Book, 'id'>;
 
 @Injectable()
 export class BookFormStore extends ComponentStore<BookFormState> {
@@ -28,7 +25,7 @@ export class BookFormStore extends ComponentStore<BookFormState> {
   private readonly isSaving = this.store.selectSignal(bookFeature.selectIsSaving);
   private readonly currentBook = this.store.selectSignal(bookFeature.selectCurrentBook);
 
-  private readonly _bookFormSignal = signal<BookFormModel>({
+  private readonly _bookFormSignal = signal<BookFormData>({
     title: '',
     author: '',
     year: new Date().getFullYear(),

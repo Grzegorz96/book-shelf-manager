@@ -1,0 +1,104 @@
+@use 'abstracts' as *;
+
+$viewport-offset: 7rem;
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: calc(100dvh - #{$viewport-offset});
+}
+
+.board-skeleton {
+  width: 100%;
+  min-height: calc(100dvh - #{$viewport-offset});
+  @include flex-layout($direction: column);
+  gap: 0.75rem;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  @include mq('md') {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  @include mq('lg') {
+    gap: 0.75rem;
+  }
+
+  @include mq('xl') {
+    gap: 1rem;
+  }
+
+  &__column {
+    @include flex-layout($direction: column);
+    flex: 1;
+    border-radius: size('radius-lg');
+    border: 1px solid color('border');
+    background-color: color('card');
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  &__column-header {
+    @include flex-layout($justify: space-between, $align: center);
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid color('border');
+    flex-shrink: 0;
+
+    @include mq('md') {
+      padding: 0.75rem 0.75rem;
+    }
+
+    @include mq('lg') {
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  &__column-title {
+    height: 1.25rem;
+    width: 5rem;
+    border-radius: size('radius-md');
+    background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
+    animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &__column-count {
+    height: 1.5rem;
+    width: 2rem;
+    border-radius: size('radius-md');
+    background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
+    animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &__column-content {
+    flex: 1;
+    padding: 0.5rem;
+    @include flex-layout($direction: column);
+    gap: 0.5rem;
+
+    @include mq('md') {
+      padding: 0.5rem;
+    }
+
+    @include mq('lg') {
+      padding: 0.75rem;
+    }
+  }
+
+  &__item {
+    height: 2.75rem;
+    border-radius: size('radius-lg');
+    background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
+    animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes board-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -41,7 +41,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1965,
       "description": "Epicka opowieść o polityce i religii na pustynnej planecie Arrakis.",
       "genre": "Sci-Fi",
-      "isFavorite": true
+      "isFavorite": true,
+      "status": "todo",
+      "order": "a0"
     },
     {
       "id": "2",
@@ -50,7 +52,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1993,
       "description": "Przygody Geralta z Rivii, płatnego zabójcy potworów.",
       "genre": "Fantasy",
-      "isFavorite": true
+      "isFavorite": true,
+      "status": "todo",
+      "order": "a1"
     },
     {
       "id": "3",
@@ -59,7 +63,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1949,
       "description": "Totalitarna wizja przyszłości pod okiem Wielkiego Brata.",
       "genre": "Dystopia",
-      "isFavorite": false
+      "isFavorite": false,
+      "status": "todo",
+      "order": "a2"
     },
     {
       "id": "4",
@@ -68,7 +74,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1937,
       "description": "Wyprawa Bilbo Bagginsa do Samotnej Góry.",
       "genre": "Fantasy",
-      "isFavorite": false
+      "isFavorite": false,
+      "status": "todo",
+      "order": "a3"
     },
     {
       "id": "5",
@@ -77,7 +85,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 2001,
       "description": "Tajemnica zapomnianej książki w powojennej Barcelonie.",
       "genre": "Mystery",
-      "isFavorite": true
+      "isFavorite": true,
+      "status": "todo",
+      "order": "a4"
     },
     {
       "id": "6",
@@ -86,7 +96,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 2005,
       "description": "Walka o przetrwanie w tunelach moskiewskiego metra.",
       "genre": "Post-apoc",
-      "isFavorite": false
+      "isFavorite": false,
+      "status": "todo",
+      "order": "a5"
     },
     {
       "id": "7",
@@ -95,7 +107,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1887,
       "description": "Pierwsza sprawa Sherlocka Holmesa i Doktora Watsona.",
       "genre": "Kryminał",
-      "isFavorite": false
+      "isFavorite": false,
+      "status": "todo",
+      "order": "a6"
     },
     {
       "id": "8",
@@ -104,7 +118,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1951,
       "description": "Plan ratowania cywilizacji galaktycznej przed upadkiem.",
       "genre": "Sci-Fi",
-      "isFavorite": true
+      "isFavorite": true,
+      "status": "todo",
+      "order": "a7"
     },
     {
       "id": "9",
@@ -113,7 +129,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 1866,
       "description": "Dylematy moralne Raskolnikowa po dokonaniu zbrodni.",
       "genre": "Klasyka",
-      "isFavorite": false
+      "isFavorite": false,
+      "status": "todo",
+      "order": "a8"
     },
     {
       "id": "10",
@@ -122,7 +140,9 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "year": 2008,
       "description": "Kontakt z obcą cywilizacją zmienia losy ludzkości.",
       "genre": "Sci-Fi",
-      "isFavorite": true
+      "isFavorite": true,
+      "status": "todo",
+      "order": "a9"
     }
   ]
 }

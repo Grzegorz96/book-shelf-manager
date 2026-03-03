@@ -8,7 +8,7 @@ import { EMPTY, filter, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { toErrorMessage } from '@app/core/utils';
 import { ErrorModalActions } from '@app/shared/error-modal/state';
-import { bookFeature } from '../state';
+import { bookFeature } from '@app/features/books/state';
 
 interface BookDetailsState {
   data: Book | null;

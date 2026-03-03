@@ -1,1 +1,1 @@
-export type { Book } from './book.interface';
+export type { Book, BookReadingStatus, BookFormData } from './book.interface';

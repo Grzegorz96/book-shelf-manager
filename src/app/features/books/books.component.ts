@@ -3,10 +3,9 @@ import { BookCardComponent } from './book-card/book-card.component';
 import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { bookFeature } from './state';
-import { BookPageActions } from './state/book.actions';
+import { bookFeature, BookPageActions } from '@app/features/books/state';
 import { RouterActions } from '@app/core/state/router';
 
 @Component({

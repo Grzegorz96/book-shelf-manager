@@ -1,0 +1,15 @@
+<section class="board-skeleton" aria-busy="true" aria-label="Loading board">
+  @for (column of columns; track column.id) {
+    <div class="board-skeleton__column">
+      <header class="board-skeleton__column-header">
+        <div class="board-skeleton__column-title" aria-hidden="true"></div>
+        <div class="board-skeleton__column-count" aria-hidden="true"></div>
+      </header>
+      <div class="board-skeleton__column-content">
+        @for (i of column.itemIndices; track i) {
+          <div class="board-skeleton__item" aria-hidden="true"></div>
+        }
+      </div>
+    </div>
+  }
+</section>

@@ -1,3 +1,5 @@
+export type BookReadingStatus = 'todo' | 'in-progress' | 'done';
+
 export interface Book {
   id: string;
   title: string;
@@ -6,4 +8,8 @@ export interface Book {
   description: string;
   genre: string;
   isFavorite: boolean;
+  status: BookReadingStatus;
+  order: string;
 }
+
+export type BookFormData = Omit<Book, 'id' | 'status' | 'order'>;

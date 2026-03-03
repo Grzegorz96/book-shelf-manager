@@ -1,5 +1,5 @@
 import { Action, createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Book } from '../models';
+import { Book, BookReadingStatus, BookFormData } from '../models';
 
 export const BookPageActions = createActionGroup({
   source: 'Books/Page',
@@ -7,8 +7,15 @@ export const BookPageActions = createActionGroup({
     'Load Books': emptyProps(),
     'Delete Book': props<{ id: string }>(),
     'Toggle Favorite': props<{ id: string }>(),
-    'Update Book': props<{ id: string; changes: Partial<Omit<Book, 'id'>> }>(),
-    'Create Book': props<{ newBook: Omit<Book, 'id'> }>(),
+    'Update Book': props<{ id: string; changes: Partial<BookFormData> }>(),
+    'Create Book': props<{ newBook: BookFormData }>(),
+    'Update Book Position': props<{
+      id: string;
+      newStatus: BookReadingStatus;
+      oldStatus: BookReadingStatus;
+      newOrder: string;
+      oldOrder: string;
+    }>(),
   },
 });
 
@@ -24,5 +31,12 @@ export const BookApiActions = createActionGroup({
     'Update Book Failure': props<{ error: string; retryAction: Action }>(),
     'Create Book Failure': props<{ error: string; retryAction: Action }>(),
     'Load Books Background Failure': emptyProps(),
+    'Update Book Position Success': emptyProps(),
+    'Update Book Position Failure': props<{
+      error: string;
+      id: string;
+      oldStatus: BookReadingStatus;
+      oldOrder: string;
+    }>(),
   },
 });

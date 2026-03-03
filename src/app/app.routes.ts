@@ -1,10 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards';
 import { HomeComponent } from '@features/home';
-import { bookFeature } from './features/books/state';
-import { provideState } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { BooksEffects } from './features/books/state/book.effects';
 
 export const routes: Routes = [
   {
@@ -16,7 +12,6 @@ export const routes: Routes = [
     path: 'books',
     title: 'Books',
     canActivate: [authGuard],
-    providers: [provideState(bookFeature), provideEffects(BooksEffects)],
     loadComponent: () => import('@features/books').then((m) => m.BooksComponent),
     children: [
       {
@@ -41,7 +36,12 @@ export const routes: Routes = [
       },
     ],
   },
-
+  {
+    path: 'board',
+    title: 'Board',
+    canActivate: [authGuard],
+    loadComponent: () => import('@app/features/board').then((m) => m.BoardComponent),
+  },
   {
     path: 'auth',
     title: 'Auth',
