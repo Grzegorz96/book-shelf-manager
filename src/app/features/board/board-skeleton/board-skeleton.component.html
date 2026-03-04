@@ -7,7 +7,16 @@
       </header>
       <div class="board-skeleton__column-content">
         @for (i of column.itemIndices; track i) {
-          <div class="board-skeleton__item" aria-hidden="true"></div>
+          <div class="board-skeleton__item" aria-hidden="true">
+            <div class="board-skeleton__item-header">
+              <div class="board-skeleton__item-genre"></div>
+            </div>
+            <div class="board-skeleton__item-title"></div>
+            <div class="board-skeleton__item-meta">
+              <div class="board-skeleton__item-author"></div>
+              <div class="board-skeleton__item-year"></div>
+            </div>
+          </div>
         }
       </div>
     </div>

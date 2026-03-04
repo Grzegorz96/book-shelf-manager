@@ -44,8 +44,24 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    title: 'Auth',
     loadComponent: () => import('@features/auth').then((m) => m.AuthComponent),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'sign-in',
+      },
+      {
+        path: 'sign-in',
+        title: 'Sign In',
+        loadComponent: () => import('@features/auth/sign-in').then((m) => m.SignInComponent),
+      },
+      {
+        path: 'sign-up',
+        title: 'Sign Up',
+        loadComponent: () => import('@features/auth/sign-up').then((m) => m.SignUpComponent),
+      },
+    ],
   },
   {
     path: '**',

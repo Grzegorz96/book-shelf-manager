@@ -95,15 +95,15 @@ export const appConfig: ApplicationConfig = {
     provideState(themeFeature),
     provideState(scrollFeature),
     provideState(errorModalFeature),
-    provideEffects(
+    provideState(bookFeature),
+    provideEffects([
       AuthEffects,
       ThemeEffects,
       ScrollEffects,
       ErrorModalEffects,
       RouterEffects,
       BookEffects,
-    ),
-    provideState(bookFeature),
+    ]),
     provideRouterStore({
       serializer: CustomSerializer,
     }),

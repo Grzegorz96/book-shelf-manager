@@ -124,7 +124,7 @@ export class BookEffects {
       ofType(BookPageActions.createBook),
       concatLatestFrom(() => this.store.select(bookFeature.selectLastOrderInTodo)),
       exhaustMap(([{ newBook }, lastOrder]) => {
-        const newOrder = getNewOrder(lastOrder ?? null, null);
+        const newOrder = getNewOrder(lastOrder, null);
 
         const bookWithOrder = { ...newBook, status: DEFAULT_BOOK_STATUS, order: newOrder };
 

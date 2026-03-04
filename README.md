@@ -144,6 +144,17 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
       "status": "todo",
       "order": "a9"
     }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "test@test.com",
+      "password": "testtest",
+      "accessToken": "accessToken",
+      "refreshToken": "refreshToken"
+    }
   ]
 }
 ```

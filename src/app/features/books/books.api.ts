@@ -9,11 +9,11 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class BooksApi {
-  private readonly baseUrl = 'http://localhost:3000';
+  private readonly baseUrl = 'http://localhost:3000/books';
   private readonly http = inject(HttpClient);
 
   public getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.baseUrl}/books`).pipe(
+    return this.http.get<Book[]>(this.baseUrl).pipe(
       delay(500),
       // switchMap(() => throwError(() => new Error('Symulowany błąd ładowania książekxdddd'))),
     );
@@ -23,14 +23,14 @@ export class BooksApi {
     // return timer(1000).pipe(
     //   switchMap(() => throwError(() => new Error('Symulowany błąd ładowania książki'))),
     // );
-    return this.http.get<Book>(`${this.baseUrl}/books/${id}`).pipe(delay(500));
+    return this.http.get<Book>(`${this.baseUrl}/${id}`).pipe(delay(500));
   }
 
   public createBook(book: Omit<Book, 'id'>): Observable<Book> {
     // return timer(1000).pipe(
     //   switchMap(() => throwError(() => new Error('Symulowany błąd tworzenia książki'))),
     // );
-    return this.http.post<Book>(`${this.baseUrl}/books`, book).pipe(delay(2000));
+    return this.http.post<Book>(this.baseUrl, book).pipe(delay(2000));
   }
 
   public updateBook(id: string, book: Partial<Book>): Observable<Book> {
@@ -39,14 +39,14 @@ export class BooksApi {
     //     throwError(() => new Error('Symulowany błąd aktualizacji ulubionej książki')),
     //   ),
     // );
-    return this.http.patch<Book>(`${this.baseUrl}/books/${id}`, book).pipe(delay(2000));
+    return this.http.patch<Book>(`${this.baseUrl}/${id}`, book).pipe(delay(2000));
   }
 
   public deleteBook(id: string): Observable<Book> {
     // return timer(1000).pipe(
     //   switchMap(() => throwError(() => new Error('Symulowany błąd usuwania książki'))),
     // );
-    return this.http.delete<Book>(`${this.baseUrl}/books/${id}`).pipe(delay(500));
+    return this.http.delete<Book>(`${this.baseUrl}/${id}`).pipe(delay(500));
   }
 
   public toggleFavorite(id: string, isFavorite: boolean): Observable<Book> {
@@ -55,7 +55,7 @@ export class BooksApi {
     //     throwError(() => new Error('Symulowany błąd aktualizacji ulubionej książki')),
     //   ),
     // );
-    return this.http.patch<Book>(`${this.baseUrl}/books/${id}`, { isFavorite }).pipe(delay(200));
+    return this.http.patch<Book>(`${this.baseUrl}/${id}`, { isFavorite }).pipe(delay(200));
   }
 
   public updateBookPosition(
@@ -67,6 +67,6 @@ export class BooksApi {
     // return timer(1000).pipe(
     //   switchMap(() => throwError(() => new Error('Symulowany błąd aktualizacji pozycji książki'))),
     // );
-    return this.http.patch<Book>(`${this.baseUrl}/books/${id}`, position).pipe(delay(300));
+    return this.http.patch<Book>(`${this.baseUrl}/${id}`, position).pipe(delay(300));
   }
 }
