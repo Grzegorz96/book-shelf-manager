@@ -36,6 +36,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
   "books": [
     {
       "id": "1",
+      "userId": "1",
       "title": "Diuna",
       "author": "Frank Herbert",
       "year": 1965,
@@ -47,6 +48,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "2",
+      "userId": "1",
       "title": "Wiedźmin: Ostatnie życzenie",
       "author": "Andrzej Sapkowski",
       "year": 1993,
@@ -58,6 +60,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "3",
+      "userId": "1",
       "title": "Rok 1984",
       "author": "George Orwell",
       "year": 1949,
@@ -69,6 +72,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "4",
+      "userId": "1",
       "title": "Hobbit",
       "author": "J.R.R. Tolkien",
       "year": 1937,
@@ -80,6 +84,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "5",
+      "userId": "1",
       "title": "Cień wiatru",
       "author": "Carlos Ruiz Zafón",
       "year": 2001,
@@ -91,6 +96,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "6",
+      "userId": "1",
       "title": "Metro 2033",
       "author": "Dmitry Glukhovsky",
       "year": 2005,
@@ -102,6 +108,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "7",
+      "userId": "1",
       "title": "Studium w szkarłacie",
       "author": "A.C. Doyle",
       "year": 1887,
@@ -113,6 +120,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "8",
+      "userId": "1",
       "title": "Fundacja",
       "author": "Isaac Asimov",
       "year": 1951,
@@ -124,6 +132,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "9",
+      "userId": "1",
       "title": "Zbrodnia i kara",
       "author": "Fiodor Dostojewski",
       "year": 1866,
@@ -135,6 +144,7 @@ The app uses **json-server** as a mock API. The `db.json` file is **not** in the
     },
     {
       "id": "10",
+      "userId": "1",
       "title": "Problem trzech ciał",
       "author": "Cixin Liu",
       "year": 2008,

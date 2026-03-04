@@ -113,7 +113,7 @@ export class BookFormStore extends ComponentStore<BookFormState> {
       if (id) {
         this.store.dispatch(BookPageActions.updateBook({ id, changes: formValue }));
       } else {
-        this.store.dispatch(BookPageActions.createBook({ newBook: formValue }));
+        this.store.dispatch(BookPageActions.createBook({ formData: formValue }));
       }
     });
   }

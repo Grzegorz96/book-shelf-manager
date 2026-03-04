@@ -12,8 +12,8 @@ export class BooksApi {
   private readonly baseUrl = 'http://localhost:3000/books';
   private readonly http = inject(HttpClient);
 
-  public getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.baseUrl).pipe(
+  public getBooks(userId: string): Observable<Book[]> {
+    return this.http.get<Book[]>(this.baseUrl, { params: { userId } }).pipe(
       delay(500),
       // switchMap(() => throwError(() => new Error('Symulowany błąd ładowania książekxdddd'))),
     );
