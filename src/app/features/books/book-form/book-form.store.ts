@@ -1,11 +1,13 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, switchMap, tap, EMPTY } from 'rxjs';
 import { BooksApi } from '../books.api';
 import { Book, BookFormData } from '../models';
-import { BookPageActions, bookFeature } from '@app/features/books/state';
+import { BookApiActions, BookPageActions, bookFeature } from '@app/features/books/state';
 import { ErrorModalActions } from '@app/shared/error-modal/state';
 import { RouterActions, selectRouteParam } from '@app/core/state/router';
 import { toErrorMessage } from '@app/core/utils';
@@ -15,14 +17,15 @@ interface BookFormState {
   data: Book | null;
   isLoading: boolean;
   error: string | null;
+  isSaving: boolean;
 }
 
 @Injectable()
 export class BookFormStore extends ComponentStore<BookFormState> {
   private readonly store = inject(Store);
   private readonly booksApi = inject(BooksApi);
+  private readonly actions$ = inject(Actions);
   private readonly bookId = this.store.selectSignal(selectRouteParam('id'));
-  private readonly isSaving = this.store.selectSignal(bookFeature.selectIsSaving);
   private readonly currentBook = this.store.selectSignal(bookFeature.selectCurrentBook);
 
   private readonly _bookFormSignal = signal<BookFormData>({
@@ -46,15 +49,12 @@ export class BookFormStore extends ComponentStore<BookFormState> {
     });
   }
 
-  readonly vm = computed(() => ({
-    data: this.state().data,
-    isLoading: this.state().isLoading,
-    error: this.state().error,
-    isSaving: this.isSaving(),
+  readonly vm = this.selectSignal((state) => ({
+    ...state,
     bookForm: this.bookForm,
   }));
 
-  readonly bookForm = form(this._bookFormSignal, (fieldPath) => {
+  private readonly bookForm = form(this._bookFormSignal, (fieldPath) => {
     const currentYear = new Date().getFullYear();
 
     required(fieldPath.title, { message: 'Title is required' });
@@ -70,7 +70,23 @@ export class BookFormStore extends ComponentStore<BookFormState> {
   });
 
   constructor() {
-    super({ data: null, isLoading: false, error: null });
+    super({ data: null, isLoading: false, error: null, isSaving: false });
+
+    this.actions$
+      .pipe(ofType(BookPageActions.createBook, BookPageActions.updateBook), takeUntilDestroyed())
+      .subscribe(() => this.patchState({ isSaving: true }));
+
+    this.actions$
+      .pipe(
+        ofType(
+          BookApiActions.createBookSuccess,
+          BookApiActions.updateBookSuccess,
+          BookApiActions.createBookFailure,
+          BookApiActions.updateBookFailure,
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.patchState({ isSaving: false }));
   }
 
   readonly loadBook = this.effect<string | undefined>((id$) =>

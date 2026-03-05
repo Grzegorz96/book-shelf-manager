@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom, mapResponse } from '@ngrx/operators';
-import { map, switchMap, exhaustMap, concatMap } from 'rxjs/operators';
+import { map, exhaustMap, concatMap } from 'rxjs/operators';
 import { BooksApi } from '../books.api';
 import { BookApiActions, BookPageActions } from './book.actions';
 import { Store } from '@ngrx/store';
@@ -24,15 +24,16 @@ export class BookEffects {
       ofType(BookPageActions.loadBooks),
       concatLatestFrom(() => [
         this.store.select(bookFeature.selectLastFetchedAt),
-        this.store.select(bookFeature.selectHasData),
         this.store.select(authFeature.selectUser),
       ]),
-      switchMap(([_, lastFetchedAt, hasData, user]) => {
+      exhaustMap(([_, lastFetchedAt, user]) => {
         if (!user) return EMPTY;
+
+        const hasBeenFetched = lastFetchedAt !== null;
 
         const isDataStale = !lastFetchedAt || Date.now() - lastFetchedAt > BOOKS_STALE_TIME;
 
-        if (!hasData) {
+        if (!hasBeenFetched) {
           return this.booksApi.getBooks(user.id).pipe(
             mapResponse({
               next: (books) => BookApiActions.loadBooksSuccess({ books }),

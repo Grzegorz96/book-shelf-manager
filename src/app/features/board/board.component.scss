@@ -55,6 +55,18 @@ $viewport-offset: 7rem;
     }
   }
 
+  &__error {
+    @include flex-layout($justify: center, $align: center, $direction: column);
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  &__error-text {
+    color: color('destructive');
+    font-size: size('font-sm');
+  }
+
   &__column-title {
     font-size: size('font-lg');
     color: color('foreground');

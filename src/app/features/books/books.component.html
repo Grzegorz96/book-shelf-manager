@@ -20,7 +20,7 @@
   <div class="books__grid-section">
     @if (vm().isLoading) {
       <div class="books__grid">
-        @for (i of skeletons; track $index) {
+        @for (i of vm().skeletons; track $index) {
           <app-book-card-skeleton />
         }
       </div>
@@ -33,7 +33,7 @@
       </div>
     } @else if (!vm().isLoading) {
       <div class="books__grid">
-        @for (book of filteredBooks(); track book.id) {
+        @for (book of vm().books; track book.id) {
           <app-book-card
             [book]="book"
             (onEdit)="handleEditBook($event)"
@@ -43,9 +43,9 @@
           />
         } @empty {
           <div class="books__empty">
-            @if (filterGenre()) {
+            @if (vm().filterGenre) {
               <p class="books__empty-text">
-                No books found matching the genre "{{ filterGenre() }}".
+                No books found matching the genre "{{ vm().filterGenre }}".
               </p>
             } @else {
               <p class="books__empty-text">Your library is empty. Add your first book!</p>
