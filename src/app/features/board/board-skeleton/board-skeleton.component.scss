@@ -86,8 +86,57 @@ $viewport-offset: 7rem;
   }
 
   &__item {
-    height: 2.75rem;
+    @include flex-layout($direction: column, $align: stretch);
+    gap: 0.375rem;
+    padding: 0.75rem 1rem;
     border-radius: size('radius-lg');
+    border: 1px solid color('border');
+    background-color: color('background');
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    min-width: 0;
+  }
+
+  &__item-header {
+    @include flex-layout($justify: space-between, $align: center);
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  &__item-genre {
+    height: 1.25rem;
+    width: 4rem;
+    border-radius: size('radius-md');
+    background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
+    animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &__item-title {
+    height: 1.9rem;
+    width: 100%;
+    max-width: 14rem;
+    border-radius: size('radius-md');
+    background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
+    animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &__item-meta {
+    @include flex-layout($align: center);
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  &__item-author {
+    height: 0.875rem;
+    width: 5rem;
+    border-radius: size('radius-md');
+    background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
+    animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &__item-year {
+    height: 0.875rem;
+    width: 2.5rem;
+    border-radius: size('radius-md');
     background-color: color-mix(in oklch, color('muted-foreground') 20%, transparent);
     animation: board-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }

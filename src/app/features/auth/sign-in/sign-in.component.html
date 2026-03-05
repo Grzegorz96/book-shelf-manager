@@ -1,0 +1,65 @@
+<div class="auth">
+  <form (submit)="handleSubmit($event)" class="auth__form">
+    <h3 class="auth__form-title">Sign in</h3>
+
+    <div class="auth__form-field">
+      <label for="email" class="auth__form-label">Email *</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        [formField]="signInForm.email"
+        class="auth__form-input"
+        [class.auth__form-input--error]="
+          signInForm.email().invalid() && signInForm.email().touched()
+        "
+      />
+      @if (signInForm.email().invalid() && signInForm.email().touched()) {
+        @for (error of signInForm.email().errors(); track error.kind) {
+          <span class="auth__form-error">
+            {{ error.message }}
+          </span>
+        }
+      }
+    </div>
+
+    <div class="auth__form-field">
+      <label for="password" class="auth__form-label">Password *</label>
+      <input
+        id="password"
+        type="password"
+        [formField]="signInForm.password"
+        class="auth__form-input"
+        [class.auth__form-input--error]="
+          signInForm.password().invalid() && signInForm.password().touched()
+        "
+      />
+      @if (signInForm.password().invalid() && signInForm.password().touched()) {
+        @for (error of signInForm.password().errors(); track error.kind) {
+          <span class="auth__form-error">
+            {{ error.message }}
+          </span>
+        }
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="app-button app-button--primary"
+      [disabled]="signInForm().invalid() || vm().isLoading"
+    >
+      {{ vm().isLoading ? 'Signing in...' : 'Sign in' }}
+    </button>
+
+    @if (vm().error) {
+      <span class="auth__form-error auth__form-error--center">
+        {{ vm().error }}
+      </span>
+    }
+  </form>
+
+  <p class="auth__toggle">
+    Don't have an account?
+    <a routerLink="/auth/sign-up" class="auth__toggle-link" aria-label="Go to sign up"> Sign up </a>
+  </p>
+</div>

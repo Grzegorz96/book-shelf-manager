@@ -1,8 +1,15 @@
-@if (isLoading()) {
+@if (vm().isLoading) {
   <app-board-skeleton />
+} @else if (vm().error) {
+  <div class="board__error">
+    <p class="board__error-text">{{ vm().error }}</p>
+    <button type="button" class="app-button app-button--primary" (click)="handleRetry()">
+      Retry
+    </button>
+  </div>
 } @else {
   <section class="board" cdkDropListGroup>
-    @for (column of columns(); track column.id) {
+    @for (column of vm().columns; track column.id) {
       <div class="board__column">
         <header class="board__column-header">
           <h2 class="board__column-title">{{ column.title }}</h2>

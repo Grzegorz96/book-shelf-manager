@@ -8,7 +8,7 @@ export const BookPageActions = createActionGroup({
     'Delete Book': props<{ id: string }>(),
     'Toggle Favorite': props<{ id: string }>(),
     'Update Book': props<{ id: string; changes: Partial<BookFormData> }>(),
-    'Create Book': props<{ newBook: BookFormData }>(),
+    'Create Book': props<{ formData: BookFormData }>(),
     'Update Book Position': props<{
       id: string;
       newStatus: BookReadingStatus;

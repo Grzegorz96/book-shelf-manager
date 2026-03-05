@@ -1,12 +1,13 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookCardComponent } from './book-card/book-card.component';
 import { BookCardSkeletonComponent } from './book-card-skeleton/book-card-skeleton.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { bookFeature, BookPageActions } from '@app/features/books/state';
+import { BookPageActions } from '@app/features/books/state';
 import { RouterActions } from '@app/core/state/router';
+import { BooksStore } from './books.store';
 
 @Component({
   selector: 'app-books',
@@ -17,23 +18,15 @@ import { RouterActions } from '@app/core/state/router';
     FilterBarComponent,
     RouterOutlet,
   ],
+  providers: [BooksStore],
   templateUrl: './books.component.html',
   styleUrl: './books.component.scss',
 })
 export class BooksComponent {
   private readonly store = inject(Store);
+  protected readonly booksStore = inject(BooksStore);
 
-  protected readonly skeletons = Array(9).fill(0);
-  protected readonly filterGenre = signal<string>('');
-
-  protected readonly vm = this.store.selectSignal(bookFeature.selectVm);
-
-  protected readonly filteredBooks = computed(() => {
-    const books = this.vm().books ?? [];
-    const filter = this.filterGenre().toLowerCase().trim();
-    if (!filter) return books;
-    return books.filter((book) => book.genre.toLowerCase().includes(filter));
-  });
+  protected readonly vm = this.booksStore.vm;
 
   constructor() {
     this.store.dispatch(BookPageActions.loadBooks());
@@ -54,7 +47,7 @@ export class BooksComponent {
   }
 
   handleFilterOutput(category: string): void {
-    this.filterGenre.set(category);
+    this.booksStore.setFilterGenre(category);
   }
 
   handleViewDetails(id: string): void {

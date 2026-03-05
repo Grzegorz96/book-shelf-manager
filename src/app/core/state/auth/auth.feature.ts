@@ -1,51 +1,43 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
-import { AuthPageActions } from './auth.actions';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
+import { AuthPageActions, AuthApiActions } from './auth.actions';
 import { AUTH_KEY } from './auth.constants';
+import { AuthenticatedUser } from './models';
 
-// private getInitialTheme(): boolean {
-//   const savedTheme = localStorage.getItem(this.THEME_KEY);
-
-//   if (savedTheme !== null) {
-//     try {
-//       const parsedTheme = JSON.parse(savedTheme);
-
-//       if (typeof parsedTheme === 'boolean') return parsedTheme;
-//     } catch {
-//       return window.matchMedia('(prefers-color-scheme: dark)').matches;
-//     }
-//   }
-//   return window.matchMedia('(prefers-color-scheme: dark)').matches;
-// }
-
-function getInitialAuthStatus(): boolean {
-  if (typeof window === 'undefined') return false;
+function getInitialUser(): AuthenticatedUser | null {
+  if (typeof window === 'undefined') return null;
 
   const saved = localStorage.getItem(AUTH_KEY);
-  if (!saved) return false;
+  if (!saved) return null;
 
   try {
     const parsed = JSON.parse(saved);
-    return typeof parsed === 'boolean' ? parsed : false;
+    return typeof parsed === 'object' ? parsed : null;
   } catch {
-    return false;
+    return null;
   }
 }
 
 export interface AuthState {
-  isAuthenticated: boolean;
+  user: AuthenticatedUser | null;
 }
 
 export const initialState: AuthState = {
-  isAuthenticated: getInitialAuthStatus(),
+  user: getInitialUser(),
 };
 
 const reducer = createReducer(
   initialState,
-  on(AuthPageActions.login, () => ({ isAuthenticated: true })),
-  on(AuthPageActions.logout, () => ({ isAuthenticated: false })),
+
+  on(AuthApiActions.signInSuccess, (state, { user }) => ({ ...state, user })),
+  on(AuthApiActions.signUpSuccess, (state, { user }) => ({ ...state, user })),
+  on(AuthPageActions.signOut, () => ({ user: null })),
 );
 
 export const authFeature = createFeature({
   name: 'auth',
   reducer,
+
+  extraSelectors: ({ selectUser }) => ({
+    selectIsAuthenticated: createSelector(selectUser, (user) => user !== null),
+  }),
 });

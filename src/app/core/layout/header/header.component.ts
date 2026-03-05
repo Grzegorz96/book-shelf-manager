@@ -3,7 +3,7 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { Store } from '@ngrx/store';
 import { LogoComponent } from '@shared/logo';
-import { authFeature, AuthPageActions } from '@app/core/state/auth';
+import { AuthPageActions, authFeature } from '@app/core/state/auth';
 import { themeFeature, ThemeCoreActions } from '@app/core/state/theme';
 import { HeaderStore } from './header.store';
 
@@ -38,7 +38,7 @@ export class HeaderComponent {
     this.store.dispatch(ThemeCoreActions.toggle());
   }
 
-  protected handleLogout(): void {
-    this.store.dispatch(AuthPageActions.logout());
+  protected handleSignOut(): void {
+    this.store.dispatch(AuthPageActions.signOut());
   }
 }

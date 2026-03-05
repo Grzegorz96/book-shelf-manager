@@ -1,0 +1,100 @@
+<div class="auth">
+  <form (submit)="handleSubmit($event)" class="auth__form">
+    <h3 class="auth__form-title">Sign up</h3>
+
+    <div class="auth__form-field">
+      <label for="firstName" class="auth__form-label">First name *</label>
+      <input
+        id="firstName"
+        type="text"
+        autocomplete="given-name"
+        [formField]="signUpForm.firstName"
+        class="auth__form-input"
+        [class.auth__form-input--error]="
+          signUpForm.firstName().invalid() && signUpForm.firstName().touched()
+        "
+      />
+      @if (signUpForm.firstName().invalid() && signUpForm.firstName().touched()) {
+        @for (error of signUpForm.firstName().errors(); track error.kind) {
+          <span class="auth__form-error">{{ error.message }}</span>
+        }
+      }
+    </div>
+
+    <div class="auth__form-field">
+      <label for="lastName" class="auth__form-label">Last name *</label>
+      <input
+        id="lastName"
+        type="text"
+        autocomplete="family-name"
+        [formField]="signUpForm.lastName"
+        class="auth__form-input"
+        [class.auth__form-input--error]="
+          signUpForm.lastName().invalid() && signUpForm.lastName().touched()
+        "
+      />
+      @if (signUpForm.lastName().invalid() && signUpForm.lastName().touched()) {
+        @for (error of signUpForm.lastName().errors(); track error.kind) {
+          <span class="auth__form-error">{{ error.message }}</span>
+        }
+      }
+    </div>
+
+    <div class="auth__form-field">
+      <label for="email" class="auth__form-label">Email *</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        [formField]="signUpForm.email"
+        class="auth__form-input"
+        [class.auth__form-input--error]="
+          signUpForm.email().invalid() && signUpForm.email().touched()
+        "
+      />
+      @if (signUpForm.email().invalid() && signUpForm.email().touched()) {
+        @for (error of signUpForm.email().errors(); track error.kind) {
+          <span class="auth__form-error">{{ error.message }}</span>
+        }
+      }
+    </div>
+
+    <div class="auth__form-field">
+      <label for="password" class="auth__form-label">Password *</label>
+      <input
+        id="password"
+        type="password"
+        autocomplete="new-password"
+        [formField]="signUpForm.password"
+        class="auth__form-input"
+        [class.auth__form-input--error]="
+          signUpForm.password().invalid() && signUpForm.password().touched()
+        "
+      />
+      @if (signUpForm.password().invalid() && signUpForm.password().touched()) {
+        @for (error of signUpForm.password().errors(); track error.kind) {
+          <span class="auth__form-error">{{ error.message }}</span>
+        }
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="app-button app-button--primary"
+      [disabled]="signUpForm().invalid() || vm().isLoading"
+    >
+      {{ vm().isLoading ? 'Signing up...' : 'Sign up' }}
+    </button>
+
+    @if (vm().error) {
+      <span class="auth__form-error auth__form-error--center">
+        {{ vm().error }}
+      </span>
+    }
+  </form>
+
+  <p class="auth__toggle">
+    Already have an account?
+    <a routerLink="/auth/sign-in" class="auth__toggle-link" aria-label="Go to sign in"> Log in </a>
+  </p>
+</div>

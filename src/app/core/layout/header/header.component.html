@@ -30,11 +30,11 @@
           <li>
             @if (isAuthenticated()) {
               <button
-                (click)="handleLogout(); closeMenuIfOpen()"
+                (click)="handleSignOut(); closeMenuIfOpen()"
                 class="app-button header__nav-link"
               >
                 <lucide-angular name="LogOut" class="header__nav-icon" />
-                <span class="header__nav-text">Logout</span>
+                <span class="header__nav-text">Sign out</span>
               </button>
             } @else {
               <a
@@ -44,7 +44,7 @@
                 (click)="closeMenuIfOpen()"
               >
                 <lucide-angular name="LogIn" class="header__nav-icon" />
-                <span class="header__nav-text">Login</span>
+                <span class="header__nav-text">Sign in</span>
               </a>
             }
           </li>

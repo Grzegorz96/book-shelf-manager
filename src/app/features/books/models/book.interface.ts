@@ -2,6 +2,7 @@ export type BookReadingStatus = 'todo' | 'in-progress' | 'done';
 
 export interface Book {
   id: string;
+  userId: string;
   title: string;
   author: string;
   year: number;
@@ -12,4 +13,4 @@ export interface Book {
   order: string;
 }
 
-export type BookFormData = Omit<Book, 'id' | 'status' | 'order'>;
+export type BookFormData = Omit<Book, 'id' | 'status' | 'order' | 'userId'>;

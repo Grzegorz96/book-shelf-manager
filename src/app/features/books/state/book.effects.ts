@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom, mapResponse } from '@ngrx/operators';
-import { map, switchMap, exhaustMap, concatMap } from 'rxjs/operators';
+import { map, exhaustMap, concatMap } from 'rxjs/operators';
 import { BooksApi } from '../books.api';
 import { BookApiActions, BookPageActions } from './book.actions';
 import { Store } from '@ngrx/store';
@@ -11,6 +11,7 @@ import { ErrorModalActions } from '@app/shared/error-modal/state';
 import { getNewOrder, toErrorMessage } from '@app/core/utils';
 import { RouterActions } from '@app/core/state/router';
 import { BOOKS_STALE_TIME, DEFAULT_BOOK_STATUS } from './book.constants';
+import { authFeature } from '@app/core/state/auth';
 
 @Injectable()
 export class BookEffects {
@@ -23,13 +24,17 @@ export class BookEffects {
       ofType(BookPageActions.loadBooks),
       concatLatestFrom(() => [
         this.store.select(bookFeature.selectLastFetchedAt),
-        this.store.select(bookFeature.selectHasData),
+        this.store.select(authFeature.selectUser),
       ]),
-      switchMap(([_, lastFetchedAt, hasData]) => {
+      exhaustMap(([_, lastFetchedAt, user]) => {
+        if (!user) return EMPTY;
+
+        const hasBeenFetched = lastFetchedAt !== null;
+
         const isDataStale = !lastFetchedAt || Date.now() - lastFetchedAt > BOOKS_STALE_TIME;
 
-        if (!hasData) {
-          return this.booksApi.getBooks().pipe(
+        if (!hasBeenFetched) {
+          return this.booksApi.getBooks(user.id).pipe(
             mapResponse({
               next: (books) => BookApiActions.loadBooksSuccess({ books }),
               error: (error: unknown) =>
@@ -44,7 +49,7 @@ export class BookEffects {
           return EMPTY;
         }
 
-        return this.booksApi.getBooks().pipe(
+        return this.booksApi.getBooks(user.id).pipe(
           mapResponse({
             next: (books) => BookApiActions.loadBooksSuccess({ books }),
             error: () => BookApiActions.loadBooksBackgroundFailure(),
@@ -122,19 +127,29 @@ export class BookEffects {
   createBook$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BookPageActions.createBook),
-      concatLatestFrom(() => this.store.select(bookFeature.selectLastOrderInTodo)),
-      exhaustMap(([{ newBook }, lastOrder]) => {
-        const newOrder = getNewOrder(lastOrder ?? null, null);
+      concatLatestFrom(() => [
+        this.store.select(bookFeature.selectLastOrderInTodo),
+        this.store.select(authFeature.selectUser),
+      ]),
+      exhaustMap(([{ formData }, lastOrder, user]) => {
+        if (!user) return EMPTY;
 
-        const bookWithOrder = { ...newBook, status: DEFAULT_BOOK_STATUS, order: newOrder };
+        const newOrder = getNewOrder(lastOrder, null);
 
-        return this.booksApi.createBook(bookWithOrder).pipe(
+        const newBook = {
+          userId: user.id,
+          ...formData,
+          status: DEFAULT_BOOK_STATUS,
+          order: newOrder,
+        };
+
+        return this.booksApi.createBook(newBook).pipe(
           mapResponse({
             next: (createdBook) => BookApiActions.createBookSuccess({ createdBook }),
             error: (error: unknown) =>
               BookApiActions.createBookFailure({
                 error: toErrorMessage(error),
-                retryAction: BookPageActions.createBook({ newBook }),
+                retryAction: BookPageActions.createBook({ formData }),
               }),
           }),
         );
